@@ -1,1 +1,18 @@
+h1= 'Questions'
+
+table
+  thead
+    tr
+      th 'Question Title'
+      th 'Show'
+  tbody
+    tr
+      - @questions.each do |question|
+        td
+          = question.title
+        td
+          = link_to 'Show', question_path(question)
+
+
+
 p= link_to 'Ask question', new_question_path
