@@ -1,28 +1,26 @@
 require 'rails_helper'
 
-feature 'User can sign up', %q{
+feature 'User can sign up', "
   In order to use system fully
   As an authenticated user
   I'd like to be able to sign up
-} do
-  
-
+" do
   background { visit root_path }
 
   scenario 'New user tries to sign up' do
     expect(page).to have_link 'Sign Up'
     click_on 'Sign Up'
-    
+
     expect(page).to have_content 'Sign up'
-    fill_in 'Email', with: "new_user@example.com"
-    fill_in 'Password', with: "12345678"
-    fill_in 'Password confirmation', with: "12345678"
+    fill_in 'Email', with: 'new_user@example.com'
+    fill_in 'Password', with: '12345678'
+    fill_in 'Password confirmation', with: '12345678'
     click_on 'Sign up'
-    
+
     expect(page).to have_content 'You have signed up successfully.'
-    expect(page).to have_content "Welcome, new_user@example.com"
+    expect(page).to have_content 'Welcome, new_user@example.com'
   end
-  
+
   scenario 'New user tries to sign up with diferent password and pasword comfirmation' do
     expect(page).to have_link 'Sign Up'
     click_on 'Sign Up'
@@ -32,24 +30,24 @@ feature 'User can sign up', %q{
 
     expect(page).to have_content "Password confirmation doesn't match Password"
   end
-  
+
   scenario 'New user tries to sign up with wrong' do
     expect(page).to have_link 'Sign Up'
     click_on 'Sign Up'
 
     click_on 'Sign up'
 
-    expect(page).to have_content "prohibited this user from being saved"
+    expect(page).to have_content 'prohibited this user from being saved'
   end
-  
+
   scenario 'New user tries to sign up with occupied email ' do
     create(:user, email: 'user@example.com')
     expect(page).to have_link 'Sign Up'
     click_on 'Sign Up'
     fill_in 'Email', with: 'user@example.com'
-    fill_in 'Password', with: "12345678"
-    fill_in 'Password confirmation', with: "12345678"
+    fill_in 'Password', with: '12345678'
+    fill_in 'Password confirmation', with: '12345678'
     click_on 'Sign up'
-    expect(page).to have_content "Email has already been taken"
+    expect(page).to have_content 'Email has already been taken'
   end
 end

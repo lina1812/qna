@@ -1,6 +1,6 @@
 class QuestionsController < ApplicationController
-  before_action :authenticate_user!, except: [:index, :show]
-  before_action :load_question, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_user!, except: %i[index show]
+  before_action :load_question, only: %i[show edit update destroy]
 
   def index
     @questions = Question.all
@@ -14,8 +14,7 @@ class QuestionsController < ApplicationController
     @question = Question.new
   end
 
-  def edit
-  end
+  def edit; end
 
   def create
     @question = Question.new(question_params)
@@ -38,10 +37,10 @@ class QuestionsController < ApplicationController
   def destroy
     if @question.author_id != current_user.id || current_user.nil?
       redirect_to question_path(@question), notice: 'You can not delete not your question.'
-      else
+    else
       @question.destroy
       redirect_to questions_path, notice: 'Your question was successfully deleted.'
-    
+
     end
   end
 

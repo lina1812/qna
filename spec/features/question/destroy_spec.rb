@@ -1,13 +1,12 @@
 require 'rails_helper'
 
-feature 'Author can destroy his question', %q{
+feature 'Author can destroy his question', "
   An authenticated user
   I'd like to be able to destroy his question
-} do
-
-  given(:users) {create_list(:user,2)}
-  given(:question_user1) {create(:question, author_id: users[0].id)}
-  given(:question_user2) {create(:question, author_id: users[1].id)}
+" do
+  given(:users) { create_list(:user, 2) }
+  given(:question_user1) { create(:question, author_id: users[0].id) }
+  given(:question_user2) { create(:question, author_id: users[1].id) }
   background do
     sign_in(users[0])
   end
