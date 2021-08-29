@@ -2,9 +2,10 @@ require 'rails_helper'
 
 RSpec.describe AnswersController, type: :controller do
   let(:user) { create(:user) }
-  let (:question) { create(:question) } 
-  let (:answer) { create(:answer) }
-  
+  let(:user1) { create(:user, email: "user1@example.com") }
+  let (:question) { create(:question, author_id: user.id) } 
+  let (:answer) { create(:answer, author_id: user.id, question_id: question.id) }
+  let (:answer1) { create(:answer, author_id: user1.id, question_id: question.id) }
   describe 'GET #show' do
 
     before { get :show, params: { id: answer } }
@@ -85,5 +86,31 @@ RSpec.describe AnswersController, type: :controller do
       end
       
     end
+  end
+  
+  describe 'DELETE #destroy' do 
+    before { login(user) }
+    context 'Author delete his answer' do
+      it 'deletes the question' do
+        question
+        answer
+        expect { delete :destroy, params: { id: answer } }.to change(Answer, :count).by(-1)
+      
+      end
+      
+      it 'redirects to question_path' do
+          delete :destroy, params: { id: answer }
+          expect(response).to redirect_to question_path(question)
+      end
+    end
+    context 'Other user delete answer' do
+      it 'does not delete the question' do
+        answer1
+        expect { delete :destroy, params: { id: answer1 } }.to_not change(Answer, :count)
+      
+      end
+      
+    end
+      
   end
 end

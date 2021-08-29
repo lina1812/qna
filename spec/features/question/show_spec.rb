@@ -17,8 +17,7 @@ feature 'User can show question', %q{
       expect(page).to have_content question.title
       expect(page).to have_content 'Question Body'
       expect(page).to have_content question.body
-      
-      expect(page).to have_content "Answers"
+
       expect(page).to have_content question.answers.first.body
       
       

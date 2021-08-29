@@ -1,14 +1,11 @@
-h1= 'Answers'
-
-table
-  thead
-    tr
-      th "Answer's Body"
-  tbody
-    tr
-      - @question.answers.each do |answer|
-        td
-          = answer.body
+p
+  = answer.body
+  -if current_user
+    -if answer.author_id == current_user.id
+      =link_to 'Delete Answer',
+      answer_path(answer),
+      method: :delete,
+      data: { confirm: 'Are you sure?'}
 
 
 
