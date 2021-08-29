@@ -1,2 +1,6 @@
 h1= @question.title
 p= @question.body
+
+= render 'shared/errors', resource: @question
+= render @question.answers
+= render partial: 'answers/new', resource: @answer

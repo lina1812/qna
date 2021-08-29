@@ -1,17 +1,9 @@
 class AnswersController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
   before_action :find_question, only: %i[new create]
-  
-  
-  def index
-    @answers = Answer.all
-  end
+
   
   def show
-  end
-  
-  def new
-    @answer = @question.answers.new
   end
   
   def edit
@@ -21,9 +13,9 @@ class AnswersController < ApplicationController
   def create
     @answer = @question.answers.new(answer_params)
     if @answer.save
-      redirect_to @answer, notice: 'Your question successfully created.'
+      redirect_to @question, notice: 'Your answer successfully created.'
     else
-      render :new
+      render template: "questions/show"
     end
   end
   
