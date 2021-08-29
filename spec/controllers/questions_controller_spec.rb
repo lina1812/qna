@@ -17,11 +17,12 @@ RSpec.describe QuestionsController, type: :controller do
   end
   
   describe 'GET #show' do
-
+    render_views
     before { get :show, params: { id: question } }
 
     it 'renders show view' do
-      expect(response).to render_template :show      
+      expect(response).to render_template :show
+      expect(response).to render_template(:partial => 'answers/_answer')
     end
     
   end

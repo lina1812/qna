@@ -7,7 +7,7 @@ feature 'User can show question', %q{
 } do
 
   given!(:question) {create(:question)}
-    scenario 'User asks a question' do
+    scenario 'User views questions' do
 
       visit questions_path
 
