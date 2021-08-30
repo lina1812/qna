@@ -14,24 +14,24 @@ feature 'Author can destroy his answer', "
       answer = create(:answer, question: question, author: users[0], body: 'Text_answer_1')
       visit question_path(id: question.id)
       click_on 'Delete Answer'
-    
+
       expect(page).to have_content 'Your answer was successfully deleted.'
       expect(page).to_not have_content answer.body
     end
-    
+
     scenario "User is trying to delete someone else's answer" do
       create(:answer, question: question, author: users[1])
       visit question_path(id: question.id)
-    
+
       expect(page).to_not have_content 'Delete Answer'
     end
   end
-  
+
   describe 'Unauthenticated user' do
-    scenario "Guest is trying to delete an answer" do
+    scenario 'Guest is trying to delete an answer' do
       create(:answer, question: question, author: users[1])
       visit question_path(id: question.id)
-    
+
       expect(page).to_not have_content 'Delete Answer'
     end
   end

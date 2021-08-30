@@ -6,7 +6,7 @@ feature 'User can show question', "
   I'd like to be able to look at the list questions
 " do
   given!(:question) { create(:question) }
-  
+
   scenario 'User views questions' do
     visit questions_path
 
