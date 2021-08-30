@@ -6,7 +6,7 @@ class AnswersController < ApplicationController
   def edit; end
 
   def create
-    @answer = @question.answers.build(answer_params)
+    @answer = Answer.new(answer_params.merge(question: @question))
     @answer.author = current_user
     if @answer.save
       redirect_to @question, notice: 'Your answer successfully created.'
