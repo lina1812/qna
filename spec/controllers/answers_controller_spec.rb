@@ -3,16 +3,9 @@ require 'rails_helper'
 RSpec.describe AnswersController, type: :controller do
   let(:user) { create(:user) }
   let(:user1) { create(:user, email: 'user1@example.com') }
-  let(:question) { create(:question, author_id: user.id) }
-  let(:answer) { create(:answer, author_id: user.id, question_id: question.id) }
-  let(:answer1) { create(:answer, author_id: user1.id, question_id: question.id) }
-  describe 'GET #show' do
-    before { get :show, params: { id: answer } }
-
-    it 'renders show view' do
-      expect(response).to render_template :show
-    end
-  end
+  let(:question) { create(:question, author: user) }
+  let(:answer) { create(:answer, author: user, question: question) }
+  let(:answer1) { create(:answer, author: user1, question: question) }
 
   describe 'GET #edit' do
     before { login(user) }
@@ -83,10 +76,10 @@ RSpec.describe AnswersController, type: :controller do
 
   describe 'DELETE #destroy' do
     before { login(user) }
+    let!(:question) { create(:question, author: user) }
+    let!(:answer) { create(:answer, author: user, question: question) }
     context 'Author delete his answer' do
       it 'deletes the question' do
-        question
-        answer
         expect { delete :destroy, params: { id: answer } }.to change(Answer, :count).by(-1)
       end
 
@@ -95,9 +88,9 @@ RSpec.describe AnswersController, type: :controller do
         expect(response).to redirect_to question_path(question)
       end
     end
+    let!(:answer1) { create(:answer, author: user1, question: question) }
     context 'Other user delete answer' do
       it 'does not delete the question' do
-        answer1
         expect { delete :destroy, params: { id: answer1 } }.to_not change(Answer, :count)
       end
     end

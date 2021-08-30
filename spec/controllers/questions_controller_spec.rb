@@ -3,8 +3,8 @@ require 'rails_helper'
 RSpec.describe QuestionsController, type: :controller do
   let(:user) { create(:user) }
   let(:user1) { create(:user, email: 'email2@example.com') }
-  let(:question) { create(:question, author_id: user.id) }
-  let(:question1) { create(:question, author_id: user1.id) }
+  let(:question) { create(:question, author: user) }
+  let(:question1) { create(:question, author: user1) }
   describe 'GET #index' do
     let(:questions) { create_list(:question, 3) }
     before { get :index }
@@ -111,9 +111,9 @@ RSpec.describe QuestionsController, type: :controller do
 
   describe 'DELETE #destroy' do
     before { login(user) }
+    let!(:question) { create(:question, author: user) }
     context 'Author delete his question' do
       it 'deletes the question' do
-        question
         expect { delete :destroy, params: { id: question } }.to change(Question, :count).by(-1)
       end
 
@@ -122,9 +122,10 @@ RSpec.describe QuestionsController, type: :controller do
         expect(response).to redirect_to questions_path
       end
     end
+
+    let!(:question1) { create(:question, author: user1) }
     context 'Other user delete question' do
       it 'does not delete the question' do
-        question1
         expect { delete :destroy, params: { id: question1 } }.to_not change(Question, :count)
       end
 

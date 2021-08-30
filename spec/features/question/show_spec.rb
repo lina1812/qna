@@ -6,7 +6,7 @@ feature 'User can show question', "
   I'd like to be able to look at the question and answers for them
 " do
   given!(:question) { create(:question) }
-  given!(:answer) { create(:answer, question_id: question.id) }
+  given!(:answer) { create(:answer, question: question) }
 
   scenario 'User views question' do
     visit question_path(question.id)
