@@ -12,7 +12,7 @@ class AnswersController < ApplicationController
     if @answer.save
       redirect_to @question, notice: 'Your answer successfully created.'
     else
-      render template: 'questions/show'
+      render 'questions/show'
     end
   end
 
@@ -25,12 +25,11 @@ class AnswersController < ApplicationController
   end
 
   def destroy
-    if @answer.author_id != current_user.id || current_user.nil?
-      redirect_to question_path(@answer.question), notice: 'You can not delete not your answer.'
-    else
+    if current_user&.author_of(@answer)
       @answer.destroy
       redirect_to question_path(@answer.question), notice: 'Your answer was successfully deleted.'
-
+    else
+      redirect_to question_path(@answer.question), notice: 'You can not delete not your answer.'
     end
   end
 
