@@ -9,5 +9,7 @@ p= @question.body
   data: { confirm: 'Are you sure?'}
 
 = render 'shared/errors', resource: @question
-= render @question.answers
-= render partial: 'answers/new', resource: @answer
+.answers
+  = render @question.answers
+-if current_user
+  = render partial: 'answers/new', resource: @answer

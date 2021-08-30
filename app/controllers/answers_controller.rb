@@ -6,21 +6,15 @@ class AnswersController < ApplicationController
   def edit; end
 
   def create
-    @answer = Answer.new(answer_params.merge(question: @question))
-    @answer.author = current_user
-    if @answer.save
-      redirect_to @question, notice: 'Your answer successfully created.'
-    else
-      render 'questions/show'
-    end
+    @answer = Answer.create(answer_params.merge(question: @question, author: current_user))
+    #if @answer.save
+    #  redirect_to @question, notice: 'Your answer successfully created.'
+    #end
   end
 
   def update
-    if @answer.update(answer_params)
-      redirect_to @answer
-    else
-      render :edit
-    end
+    @answer.update(answer_params)
+    @question = @answer.question
   end
 
   def destroy
