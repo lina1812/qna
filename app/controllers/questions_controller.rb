@@ -18,7 +18,7 @@ class QuestionsController < ApplicationController
 
   def create
     @question = Question.new(question_params)
-
+    @question.author = current_user
     if @question.save
       redirect_to @question, notice: 'Your question successfully created.'
     else
@@ -35,7 +35,7 @@ class QuestionsController < ApplicationController
   end
 
   def destroy
-    if current_user.author_of(@question)
+    if current_user.author_of?(@question)
       @question.destroy
       redirect_to questions_path, notice: 'Your question was successfully deleted.'
     else

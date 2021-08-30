@@ -11,21 +11,21 @@ RSpec.describe User, type: :model do
   let(:answer) { create(:answer, author: user) }
   let(:answer1) { create(:answer) }
   
-  describe '#author_of' do
+  describe '#author_of?' do
     context 'with valid attributes' do
       it 'verifies that the current user is the author of the question' do      
-        expect(user.author_of(question)).to eq true
+        expect(user).to be_author_of(question)
       end
       it 'verifies that the current user is the author of the answer' do      
-        expect(user.author_of(answer)).to eq true
+        expect(user).to be_author_of(answer)
       end
     end
     context 'with valid attributes' do 
       it 'verifies that the current user is not author of the question' do
-        expect(user.author_of(question1)).to eq false
+        expect(user).to_not be_author_of(question1)
       end
       it 'verifies that the current user is not author of the answer' do
-        expect(user.author_of(answer1)).to eq false
+        expect(user).to_not be_author_of(answer1)
       end
     end
   end

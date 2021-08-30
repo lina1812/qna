@@ -1,10 +1,8 @@
 p
   = answer.body
-  -if current_user&.author_of(answer)
-    =link_to 'Delete Answer',
-    answer_path(answer),
-    method: :delete,
-    data: { confirm: 'Are you sure?'}
-
-
-
+  - unless answer.new_record?
+    -if current_user&.author_of?(answer)
+      =link_to 'Delete Answer',
+      answer_path(answer),
+      method: :delete,
+      data: { confirm: 'Are you sure?'}

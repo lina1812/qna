@@ -6,7 +6,8 @@ class AnswersController < ApplicationController
   def edit; end
 
   def create
-    @answer = @question.answers.new(answer_params)
+    @answer = @question.answers.build(answer_params)
+    @answer.author = current_user
     if @answer.save
       redirect_to @question, notice: 'Your answer successfully created.'
     else
@@ -23,7 +24,7 @@ class AnswersController < ApplicationController
   end
 
   def destroy
-    if current_user.author_of(@answer)
+    if current_user.author_of?(@answer)
       @answer.destroy
       redirect_to question_path(@answer.question), notice: 'Your answer was successfully deleted.'
     else
