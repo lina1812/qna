@@ -7,14 +7,13 @@ class AnswersController < ApplicationController
 
   def create
     @answer = Answer.create(answer_params.merge(question: @question, author: current_user))
-    #if @answer.save
-    #  redirect_to @question, notice: 'Your answer successfully created.'
-    #end
   end
 
   def update
-    @answer.update(answer_params)
-    @question = @answer.question
+    if current_user.author_of?(@answer)
+      @answer.update(answer_params)
+      @question = @answer.question
+    end
   end
 
   def destroy
