@@ -7,15 +7,6 @@ RSpec.describe AnswersController, type: :controller do
   let(:answer) { create(:answer, author: user, question: question) }
   let(:answer1) { create(:answer, author: user1, question: question) }
 
-  describe 'GET #edit' do
-    before { login(user) }
-    before { get :edit, params: { id: answer } }
-
-    it 'renders edit view' do
-      expect(response).to render_template :edit
-    end
-  end
-
   describe 'POST #create' do
     before { login(user) }
     context 'with valid attributes' do
@@ -43,34 +34,44 @@ RSpec.describe AnswersController, type: :controller do
 
   describe 'PATCH #update' do
     let!(:answer) { create(:answer, author: user, question: question) }
-    before { login(user) }
-    context 'with valid attributes' do
-      it 'assigns the requested answer to @answer' do
-        patch :update, params: { id: answer, answer: attributes_for(:answer) }, format: :js
-        expect(assigns(:answer)).to eq answer
+    describe 'Authenticated user' do
+      before { login(user) }
+      
+      context 'with valid attributes' do
+        it 'assigns the requested answer to @answer' do
+          patch :update, params: { id: answer, answer: attributes_for(:answer) }, format: :js
+          expect(assigns(:answer)).to eq answer
+        end
+      
+        it 'change answer atributes' do
+          patch :update, params: { id: answer, answer: { body: 'new body' }, format: :js }
+          answer.reload
+          expect(answer.body).to eq 'new body'
+        end
+      
+        it 'renders update view' do
+          patch :update, params: { id: answer, answer: { body: 'new body' } }, format: :js
+          expect(response).to render_template :update
+        end
       end
-
-      it 'change answer atributes' do
-        patch :update, params: { id: answer, answer: { body: 'new body' }, format: :js }
-        answer.reload
-        expect(answer.body).to eq 'new body'
-      end
-
-      it 'renders update view' do
-        patch :update, params: { id: answer, answer: { body: 'new body' } }, format: :js
-        expect(response).to render_template :update
+      
+      context 'with invalid attributes' do
+        before { patch :update, params: { id: answer, answer: attributes_for(:answer, :invalid) }, format: :js }
+        it 'does not change answer' do
+          answer.reload
+          expect(answer.body).to eq 'MyText'
+        end
+        it 'renders update view' do
+          expect(response).to render_template :update
+        end
       end
     end
-
-    context 'with invalid attributes' do
-      before { login(user) }
-      before { patch :update, params: { id: answer, answer: attributes_for(:answer, :invalid) }, format: :js }
+    
+    context 'Unauthenticated can not edit answer' do
       it 'does not change answer' do
+        patch :update, params: { id: answer, answer: { body: 'new body' } }, format: :js
         answer.reload
         expect(answer.body).to eq 'MyText'
-      end
-      it 'renders update view' do
-        expect(response).to render_template :update
       end
     end
   end
