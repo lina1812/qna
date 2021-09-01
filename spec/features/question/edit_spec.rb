@@ -1,11 +1,10 @@
 require 'rails_helper'
 
-feature 'User can edit his question', %q{
+feature 'User can edit his question', "
   In order to correct mistakes
   As an author of question
   I'd like ot be able to edit my question
-} do
-
+" do
   given!(:user) { create(:user) }
   given(:user2) { create(:user) }
   given!(:question) { create(:question, author: user) }
@@ -15,7 +14,6 @@ feature 'User can edit his question', %q{
   end
 
   describe 'Authenticated user', js: true do
-
     scenario 'edits his question' do
       sign_in user
       visit question_path(question)
@@ -45,14 +43,13 @@ feature 'User can edit his question', %q{
         expect(page).to have_selector 'textarea'
       end
     end
-    
+
     scenario "tries to edit other user's question" do
       sign_in user2
       visit question_path(question)
       within '.question' do
-       expect(page).to_not have_link 'Edit' 
+        expect(page).to_not have_link 'Edit'
       end
     end
-    
   end
 end

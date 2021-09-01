@@ -8,6 +8,5 @@ Rails.application.routes.draw do
         post :mark_as_best
       end
     end
-    
   end
 end
