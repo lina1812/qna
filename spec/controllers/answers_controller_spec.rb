@@ -74,26 +74,43 @@ RSpec.describe AnswersController, type: :controller do
         expect(answer.body).to eq 'MyText'
       end
     end
+    
+    context 'User can not edit not his answer' do
+      before { login(user1) }
+      it 'does not change answer' do
+        patch :update, params: { id: answer, answer: { body: 'new body' } }, format: :js
+        answer.reload
+        expect(answer.body).to eq 'MyText'
+      end
+    end
   end
 
   describe 'DELETE #destroy' do
-    before { login(user) }
     let!(:question) { create(:question, author: user) }
     let!(:answer) { create(:answer, author: user, question: question) }
-    context 'Author delete his answer' do
-      it 'deletes the question' do
-        expect { delete :destroy, params: { id: answer } }.to change(Answer, :count).by(-1)
-      end
-
-      it 'redirects to question_path' do
-        delete :destroy, params: { id: answer }
-        expect(response).to redirect_to question_path(question)
+    context 'Unauthenticated can not delete answer' do
+      it 'does not delete answer' do
+        expect { delete :destroy, params: { id: answer } , format: :js}.to_not change(Answer, :count)
       end
     end
-    let!(:answer1) { create(:answer, author: user1, question: question) }
-    context 'Other user delete answer' do
-      it 'does not delete the question' do
-        expect { delete :destroy, params: { id: answer1 } }.to_not change(Answer, :count)
+    
+    describe 'Authenticated user' do
+      context 'Author delete his answer' do
+        before {login(user)}
+        it 'deletes the question' do
+          expect { delete :destroy, params: { id: answer }, format: :js }.to change(Answer, :count).by(-1)
+        end
+      
+        it 'renders destroy view' do
+          delete :destroy, params: { id: answer }, format: :js 
+          expect(response).to render_template :destroy
+        end
+      end
+      context 'Other user delete answer' do 
+        it 'does not delete the question' do
+          login(user1)
+          expect { delete :destroy, params: { id: answer }, format: :js}.to_not change(Answer, :count)
+        end
       end
     end
   end

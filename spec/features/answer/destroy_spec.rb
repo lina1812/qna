@@ -6,33 +6,30 @@ feature 'Author can destroy his answer', "
 " do
   given(:users) { create_list(:user, 2) }
   given(:question) { create(:question, author: users[0]) }
-  background do
-    sign_in(users[0])
-  end
-  describe 'Authenticated user' do
-    scenario 'Author try his answer' do
-      answer = create(:answer, question: question, author: users[0], body: 'Text_answer_1')
-      visit question_path(id: question.id)
-      click_on 'Delete Answer'
+  given!(:answer) {create(:answer, question: question, author: users[0], body: 'Text_answer_1')}
 
-      expect(page).to have_content 'Your answer was successfully deleted.'
+  scenario 'Unauthenticated can not delete answer', js: true do
+    visit question_path(question)
+    expect(page).to_not have_link 'Delete Answer'
+  end
+  
+  describe 'Authenticated user', js: true do
+    
+    scenario 'Author try delete his answer' do
+      sign_in(users[0])
+      visit question_path(question)
+      click_on 'Delete Answer'
+      
       expect(page).to_not have_content answer.body
     end
 
-    scenario "User is trying to delete someone else's answer" do
-      create(:answer, question: question, author: users[1])
-      visit question_path(id: question.id)
-
+    scenario "User try to delete someone else's answer" do
+      sign_in(users[1])
+      visit question_path(question)
       expect(page).to_not have_content 'Delete Answer'
     end
   end
 
-  describe 'Unauthenticated user' do
-    scenario 'Guest is trying to delete an answer' do
-      create(:answer, question: question, author: users[1])
-      visit question_path(id: question.id)
 
-      expect(page).to_not have_content 'Delete Answer'
-    end
-  end
+
 end
