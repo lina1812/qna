@@ -3,6 +3,6 @@
 
 = render 'shared/errors', resource: @question
 .answers
-  = render @question.answers
+  = render 'all_answers', resource: @question
 -if current_user
   = render partial: 'answers/new', resource: @answer

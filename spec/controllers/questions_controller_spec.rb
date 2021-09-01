@@ -24,7 +24,7 @@ RSpec.describe QuestionsController, type: :controller do
     it 'renders show view' do
       expect(response).to render_template :show
       expect(response).to render_template(partial: '_question')
-      expect(response).to render_template(partial: 'answers/_answer')
+      expect(response).to render_template(partial: '_all_answers')
     end
   end
 

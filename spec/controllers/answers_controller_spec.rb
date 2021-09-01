@@ -114,4 +114,43 @@ RSpec.describe AnswersController, type: :controller do
       end
     end
   end
+  
+  describe 'POST #mark_as_best' do
+    let!(:question) { create(:question, author: user) }
+    let!(:answer) { create(:answer, author: user, question: question) }
+    
+    context 'Unauthenticated can not make answer the best' do
+      it 'does not make best' do
+        post :mark_as_best, params: { id: answer}, format: :js
+        question.reload
+        expect(question.best_answer).to eq nil
+      end
+    end
+    
+    describe 'Authenticated user' do
+      context 'Author of question make answer the best' do
+        before {login(user)}
+        it 'creates an association with the best answer to the question' do
+          post :mark_as_best, params: { id: answer}, format: :js
+          question.reload
+          expect(question.best_answer).to eq answer
+        end
+        
+        it 'makes another answer the best' do
+          post :mark_as_best, params: { id: answer1}, format: :js
+          expect(question.reload.best_answer).to eq answer1
+          post :mark_as_best, params: { id: answer}, format: :js
+          question.reload
+          expect(question.best_answer).to eq answer
+        end
+      end
+      context 'Other user try to make answer the best' do 
+        it 'does not make the best' do
+          post :mark_as_best, params: { id: answer}, format: :js
+          question.reload
+          expect(question.best_answer).to eq nil
+        end
+      end
+    end
+  end
 end
