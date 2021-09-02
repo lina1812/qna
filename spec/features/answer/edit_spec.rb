@@ -22,7 +22,7 @@ feature 'User can edit his answer', "
         visit question_path(question)
         click_on 'Edit'
       end
-      
+
       scenario 'with correct parameters' do
         within '.answers' do
           fill_in 'Your answer', with: 'edited answer'
@@ -32,7 +32,7 @@ feature 'User can edit his answer', "
           expect(page).to_not have_selector 'textarea'
         end
       end
-      
+
       scenario 'with errors' do
         within '.answers' do
           fill_in 'Your answer', with: ''

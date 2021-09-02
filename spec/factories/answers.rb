@@ -3,7 +3,7 @@ FactoryBot.define do
     body { 'MyText' }
     association :author, factory: :user
     association :question, factory: :question
-    
+
     trait :with_files do
       after(:build) do |answer|
         answer.files.attach(

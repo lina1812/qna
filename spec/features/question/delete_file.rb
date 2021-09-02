@@ -18,8 +18,8 @@ feature 'User can delete attached files', "
       sign_in user
       visit question_path(question)
       within '.question' do
-      expect(page).to have_link 'rails_helper.rb'
-      click_on 'Delete file'  
+        expect(page).to have_link 'rails_helper.rb'
+        click_on 'Delete file'
         expect(page).to_not have_link 'rails_helper.rb'
       end
     end

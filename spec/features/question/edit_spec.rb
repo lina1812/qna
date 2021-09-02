@@ -20,13 +20,13 @@ feature 'User can edit his question', "
         visit question_path(question)
         click_on 'Edit'
       end
-      
+
       scenario 'with correct parameters' do
         within '.question' do
           fill_in 'Your question title', with: 'edited title'
           fill_in 'Your question body', with: 'edited body'
           click_on 'Save'
-      
+
           expect(page).to_not have_content question.title
           expect(page).to_not have_content question.body
           expect(page).to have_content 'edited title'
@@ -34,7 +34,7 @@ feature 'User can edit his question', "
           expect(page).to_not have_selector 'textarea'
         end
       end
-      
+
       scenario 'edits his answer with errors' do
         within '.question' do
           fill_in 'Your question body', with: ''
@@ -43,13 +43,13 @@ feature 'User can edit his question', "
           expect(page).to have_content question.body
           expect(page).to have_selector 'textarea'
         end
-      end  
+      end
       scenario 'asks a question with attached file' do
         within '.question' do
           fill_in 'Your question title', with: 'edited title'
           fill_in 'Your question body', with: 'edited body'
           attach_file 'File', ["#{Rails.root}/spec/rails_helper.rb", "#{Rails.root}/spec/spec_helper.rb"]
-          click_on 'Save'  
+          click_on 'Save'
           expect(page).to have_link 'rails_helper.rb'
           expect(page).to have_link 'spec_helper.rb'
         end

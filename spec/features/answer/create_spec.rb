@@ -29,7 +29,7 @@ feature 'User can create answer', "
       click_on 'Publish'
       expect(page).to have_content "Body can't be blank"
     end
-    
+
     scenario 'give an answer with attached file' do
       fill_in 'Body', with: 'text text text'
 

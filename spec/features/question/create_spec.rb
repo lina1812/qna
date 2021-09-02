@@ -30,7 +30,7 @@ feature 'User can create question', "
 
       expect(page).to have_content "Title can't be blank"
     end
-    
+
     scenario 'asks a question with attached file' do
       fill_in 'Title', with: 'Test question'
       fill_in 'Body', with: 'text text text'

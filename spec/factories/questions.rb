@@ -4,7 +4,7 @@ FactoryBot.define do
     body { 'MyText' }
     best_answer { nil }
     association :author, factory: :user
-    
+
     trait :with_files do
       after(:build) do |question|
         question.files.attach(
@@ -13,7 +13,7 @@ FactoryBot.define do
         )
       end
     end
-      
+
     trait :invalid do
       title { nil }
     end
