@@ -11,8 +11,13 @@ p
     div(class= "answer-errors-#{@question.best_answer_id}")
       = render 'shared/errors', resource: @question.best_answer
     = form_with model: [@question.best_answer], class: 'hidden', html: { id: "edit-answer-#{@question.best_answer_id}" }  do |f|
-      = f.label :body, 'Your answer'
-      = f.text_area :body
+      p
+        = f.label :body, 'Your answer'
+        = f.text_area :body
+      p
+        = f.label :files
+        = f.file_field :files, multiple: true
+      
       = f.submit 'Save'
     
     p=link_to 'Delete Answer', '#', class: 'delete-answer-link', data: { answer_id: @question.best_answer_id }
