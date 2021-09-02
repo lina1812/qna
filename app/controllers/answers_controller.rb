@@ -1,35 +1,29 @@
 class AnswersController < ApplicationController
   before_action :authenticate_user!, except: %i[index show]
-  before_action :load_answer, only: %i[show edit update destroy]
+  before_action :load_answer, only: %i[show edit update destroy mark_as_best]
   before_action :find_question, only: %i[new create]
 
-  def edit; end
-
   def create
-    @answer = Answer.new(answer_params.merge(question: @question))
-    @answer.author = current_user
-    if @answer.save
-      redirect_to @question, notice: 'Your answer successfully created.'
-    else
-      render 'questions/show'
-    end
+    @answer = Answer.create(answer_params.merge(question: @question, author: current_user))
   end
 
   def update
-    if @answer.update(answer_params)
-      redirect_to @answer
-    else
-      render :edit
+    if current_user.author_of?(@answer)
+      @answer.update(answer_params)
+      @question = @answer.question
     end
   end
 
   def destroy
     if current_user.author_of?(@answer)
       @answer.destroy
-      redirect_to question_path(@answer.question), notice: 'Your answer was successfully deleted.'
-    else
-      redirect_to question_path(@answer.question), notice: 'You can not delete not your answer.'
+      @question = @answer.question
     end
+  end
+
+  def mark_as_best
+    @question = @answer.question
+    @question.update(best_answer_id: @answer.id)
   end
 
   private
