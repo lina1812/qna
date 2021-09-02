@@ -25,5 +25,15 @@ $(document).on('turbolinks:load', function(){
           url: '/answers/'+answerId+'/mark_as_best',
        })
    })
+   
+   $('.answers').on('click', '.purge-file-link', function(e) {
+       e.preventDefault();
+       var answerId = $(this).data('answerId');
+       var fileId = $(this).data('fileId');
+       $.ajax({
+          type: 'GET',
+          url: '/answers/'+answerId+'/purge_file?file_id='+fileId,
+       })
+   })
 });
 

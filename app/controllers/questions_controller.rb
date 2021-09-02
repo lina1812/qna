@@ -1,6 +1,6 @@
 class QuestionsController < ApplicationController
   before_action :authenticate_user!, except: %i[index show]
-  before_action :load_question, only: %i[show edit update destroy]
+  before_action :load_question, only: %i[show edit update destroy purge_file]
 
   def index
     @questions = Question.all
@@ -35,6 +35,11 @@ class QuestionsController < ApplicationController
     else
       redirect_to question_path(@question), notice: 'You can not delete not your question.'
     end
+  end
+
+  def purge_file
+    file = @question.files.find(params[:file_id])
+    file.purge if current_user.author_of?(@question)
   end
 
   private

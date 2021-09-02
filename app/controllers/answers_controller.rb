@@ -25,6 +25,10 @@ class AnswersController < ApplicationController
     @question = @answer.question
     @question.update(best_answer_id: @answer.id)
   end
+  
+  def purge_file(file)
+    file.purge if current_user.author_of?(@answer)
+  end
 
   private
 

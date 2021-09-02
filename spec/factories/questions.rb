@@ -6,7 +6,6 @@ FactoryBot.define do
     association :author, factory: :user
     
     trait :with_files do
-
       after(:build) do |question|
         question.files.attach(
           io: File.open("#{Rails.root}/spec/rails_helper.rb"),
