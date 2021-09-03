@@ -11,8 +11,16 @@ p
         = link_to file.filename.to_s, url_for(file)
         - if current_user&.author_of?(@question)
           =link_to 'Delete file', '#', class: 'purge-file-link', data: { file_id: file.id }
+
+.links
+  p Links:
+  ul
+    - @question.links.each do |link|
+      li= link_to link.name, link.url
+      
 - if current_user&.author_of?(@question)
   p=link_to 'Edit', '#', class: 'edit-question-link', data: { question_id: @question.id }
+  
   
   .question-errors
     = render 'shared/errors', resource: @question

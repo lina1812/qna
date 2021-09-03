@@ -6,22 +6,28 @@ p
       p= link_to file.filename.to_s, url_for(file)
       - if current_user&.author_of?(answer)
         =link_to 'Delete file', '#', class: 'purge-file-link', data: { file_id: file.id }
-  .make_best
-    -if current_user&.author_of?(answer.question)
-      p=link_to 'Make the Best', '#', class: 'best-answer-link', data: { answer_id: answer.id }
+.links
+  p Links:
+  ul
+    - answer.links.each do |link|
+      li= link_to link.name, link.url  
   
-  -if current_user&.author_of?(answer)
-    p=link_to 'Edit', '#', class: 'edit-answer-link', data: { answer_id: answer.id }
+.make_best
+  -if current_user&.author_of?(answer.question)
+    p=link_to 'Make the Best', '#', class: 'best-answer-link', data: { answer_id: answer.id }
+  
+-if current_user&.author_of?(answer)
+  p=link_to 'Edit', '#', class: 'edit-answer-link', data: { answer_id: answer.id }
     
-    div(class= "answer-errors-#{answer.id}")
-      = render 'shared/errors', resource: @answer
-    = form_with model: [answer], class: 'hidden', html: { id: "edit-answer-#{answer.id}" }  do |f|
-      p
-        = f.label :body, 'Your answer'
-        = f.text_area :body
-      p
-        = f.label :files
-        = f.file_field :files, multiple: true
-      = f.submit 'Save'
+  div(class= "answer-errors-#{answer.id}")
+    = render 'shared/errors', resource: @answer
+  = form_with model: [answer], class: 'hidden', html: { id: "edit-answer-#{answer.id}" }  do |f|
+    p
+      = f.label :body, 'Your answer'
+      = f.text_area :body
+    p
+      = f.label :files
+      = f.file_field :files, multiple: true
+    = f.submit 'Save'
     
-    p=link_to 'Delete Answer', '#', class: 'delete-answer-link', data: { answer_id: answer.id }
+  p=link_to 'Delete Answer', '#', class: 'delete-answer-link', data: { answer_id: answer.id }
