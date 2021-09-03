@@ -8,6 +8,7 @@ feature 'User can add links to answer', "
   given(:user) { create(:user) }
   given!(:question) { create(:question) }
   given(:gist_url) { 'https://gist.github.com/vkurennov/743f9367caa1039874af5a2244e1b44c' }
+  given(:google_url) { 'https://google.com' }
 
   scenario 'User adds link when give an answer', js: true do
     sign_in(user)
@@ -16,13 +17,32 @@ feature 'User can add links to answer', "
 
     fill_in 'answer_body', with: 'My answer'
 
-    fill_in 'Link name', with: 'My gist'
+    fill_in 'Name', with: 'My gist'
     fill_in 'Url', with: gist_url
 
     click_on 'Publish'
 
     within '.answers' do
       expect(page).to have_link 'My gist', href: gist_url
+    end
+  end
+
+  scenario 'User adds several links when give an answer', js: true do
+    sign_in(user)
+
+    visit question_path(question)
+
+    fill_in 'answer_body', with: 'My answer'
+    click_on 'add link'
+    page.all(:fillable_field, 'Name').first.set('My gist')
+    page.all(:fillable_field, 'Url').first.set(gist_url)
+    page.all(:fillable_field, 'Name').last.set('Google')
+    page.all(:fillable_field, 'Url').last.set(google_url)
+    click_on 'Publish'
+
+    within '.answers' do
+      expect(page).to have_link 'My gist', href: gist_url
+      expect(page).to have_link 'Google', href: google_url
     end
   end
 end
