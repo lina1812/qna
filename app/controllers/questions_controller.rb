@@ -37,11 +37,6 @@ class QuestionsController < ApplicationController
     end
   end
 
-  def purge_file
-    file = @question.files.find(params[:file_id])
-    file.purge if current_user.author_of?(@question)
-  end
-
   private
 
   def load_question

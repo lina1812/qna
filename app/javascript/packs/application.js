@@ -12,6 +12,7 @@ require("jquery")
 
 import("answers")
 import("question")
+import("file")
 import * as ActiveStorage from "@rails/activestorage"
 ActiveStorage.start()
 
