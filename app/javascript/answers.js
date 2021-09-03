@@ -25,5 +25,6 @@ $(document).on('turbolinks:load', function(){
           url: '/answers/'+answerId+'/mark_as_best',
        })
    })
+   
 });
 
