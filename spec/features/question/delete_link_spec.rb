@@ -19,9 +19,9 @@ feature 'User can add links to question', "
       sign_in user
       visit question_path(question)
       within '.question' do
-        expect(page).to have_link 'Gist'
+        expect(page).to have_link 'Google'
         click_on 'Delete link'
-        expect(page).to_not have_link 'Gist'
+        expect(page).to_not have_link 'Google'
       end
     end
 

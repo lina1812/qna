@@ -7,7 +7,7 @@ feature 'User can add links to answer', "
 " do
   given(:user) { create(:user) }
   given!(:question) { create(:question) }
-  given(:gist_url) { 'https://gist.github.com/vkurennov/743f9367caa1039874af5a2244e1b44c' }
+  given(:github_url) { 'https://github.com/' }
   given(:google_url) { 'https://google.com' }
   background do
     sign_in(user)
@@ -16,18 +16,18 @@ feature 'User can add links to answer', "
   end
   
   scenario 'User adds link when give an answer', js: true do
-    fill_in 'Name', with: 'My gist'
-    fill_in 'Url', with: gist_url
+    fill_in 'Name', with: 'GitHub'
+    fill_in 'Url', with: github_url
 
     click_on 'Publish'
 
     within '.answers' do
-      expect(page).to have_link 'My gist', href: gist_url
+      expect(page).to have_link 'GitHub', href: github_url
     end
   end
   
   scenario 'User adds link when give an answer with errors', js: true do
-    fill_in 'Name', with: 'My gist'
+    fill_in 'Name', with: 'GitHub'
     fill_in 'Url', with: ''
 
     click_on 'Publish'
@@ -40,14 +40,14 @@ feature 'User can add links to answer', "
   scenario 'User adds several links when give an answer', js: true do
 
     click_on 'add link'
-    page.all(:fillable_field, 'Name').first.set('My gist')
-    page.all(:fillable_field, 'Url').first.set(gist_url)
+    page.all(:fillable_field, 'Name').first.set('GitHub')
+    page.all(:fillable_field, 'Url').first.set(github_url)
     page.all(:fillable_field, 'Name').last.set('Google')
     page.all(:fillable_field, 'Url').last.set(google_url)
     click_on 'Publish'
 
     within '.answers' do
-      expect(page).to have_link 'My gist', href: gist_url
+      expect(page).to have_link 'GitHub', href: github_url
       expect(page).to have_link 'Google', href: google_url
     end
   end

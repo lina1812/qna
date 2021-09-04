@@ -1,7 +1,7 @@
 p
   = answer.body
-p
-  - if answer.files.attached?
+- if answer.files.attached?
+  .files
     - answer.files.each do |file|
       p= link_to file.filename.to_s, url_for(file)
       - if current_user&.author_of?(answer)
@@ -10,7 +10,11 @@ p
   p Links:
   ul
     - answer.links.each do |link|
-      li= link_to link.name, link.url 
+      -if link.is_a_gist?
+        - link.raw_gist.split("\n") do |line|
+          p = line
+      -else
+        li= link_to link.name, link.url 
       - if current_user&.author_of?(answer)
         =link_to 'Delete link', '#', class: 'delete-link', data: { link_id: link.id } 
   

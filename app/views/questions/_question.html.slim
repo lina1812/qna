@@ -16,10 +16,14 @@ p
   p Links:
   ul
     - @question.links.each do |link|
-      li= link_to link.name, link.url
+      -if link.is_a_gist?
+        - link.raw_gist.split("\n") do |line|
+          p = line
+      -else  
+        li= link_to link.name, link.url
       - if current_user&.author_of?(@question)
         =link_to 'Delete link', '#', class: 'delete-link', data: { link_id: link.id }
-      
+        
 - if current_user&.author_of?(@question)
   p=link_to 'Edit', '#', class: 'edit-question-link', data: { question_id: @question.id }
   
