@@ -38,6 +38,7 @@ feature 'User can add links to answer', "
   end
 
   scenario 'User adds several links when give an answer', js: true do
+
     click_on 'add link'
     page.all(:fillable_field, 'Name').first.set('My gist')
     page.all(:fillable_field, 'Url').first.set(gist_url)

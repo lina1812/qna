@@ -10,7 +10,9 @@ p
   p Links:
   ul
     - answer.links.each do |link|
-      li= link_to link.name, link.url  
+      li= link_to link.name, link.url 
+      - if current_user&.author_of?(answer)
+        =link_to 'Delete link', '#', class: 'delete-link', data: { link_id: link.id } 
   
 .make_best
   -if current_user&.author_of?(answer.question)

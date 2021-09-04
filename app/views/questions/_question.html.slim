@@ -17,6 +17,8 @@ p
   ul
     - @question.links.each do |link|
       li= link_to link.name, link.url
+      - if current_user&.author_of?(@question)
+        =link_to 'Delete link', '#', class: 'delete-link', data: { link_id: link.id }
       
 - if current_user&.author_of?(@question)
   p=link_to 'Edit', '#', class: 'edit-question-link', data: { question_id: @question.id }

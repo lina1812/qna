@@ -11,7 +11,9 @@ p
   p Links:
   ul
     - @question.best_answer.links.each do |link|
-      li= link_to link.name, link.url  
+      li= link_to link.name, link.url
+      - if current_user&.author_of?(@question.best_answer)
+        =link_to 'Delete link', '#', class: 'delete-link', data: { link_id: link.id }
       
 -if current_user&.author_of?(@question.best_answer)
   p=link_to 'Edit', '#', class: 'edit-answer-link', data: { answer_id: @question.best_answer_id }

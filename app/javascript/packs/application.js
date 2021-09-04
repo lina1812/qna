@@ -14,6 +14,7 @@ require("@nathanvda/cocoon")
 import("answers")
 import("question")
 import("file")
+import("link")
 import * as ActiveStorage from "@rails/activestorage"
 ActiveStorage.start()
 
