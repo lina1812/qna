@@ -1,7 +1,7 @@
 class AnswersController < ApplicationController
-  before_action :authenticate_user!, except: %i[index show]
-  before_action :load_answer, only: %i[show edit update destroy mark_as_best]
-  before_action :find_question, only: %i[new create]
+  before_action :authenticate_user!
+  before_action :load_answer, only: %i[update destroy mark_as_best]
+  before_action :find_question, only: %i[create]
 
   def create
     @answer = Answer.create(answer_params.merge(question: @question, author: current_user))

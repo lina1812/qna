@@ -34,6 +34,9 @@ p
     p
       = f.label :files
       = f.file_field :files, multiple: true
+    p Links:
+    .links
+      = link_to_add_association 'add link', f, :links, partial: 'links/link_fields'
     = f.submit 'Save'
     
   p=link_to 'Delete Answer', '#', class: 'delete-answer-link', data: { answer_id: answer.id }

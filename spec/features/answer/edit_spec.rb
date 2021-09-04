@@ -51,6 +51,16 @@ feature 'User can edit his answer', "
           expect(page).to have_link 'spec_helper.rb'
         end
       end
+      scenario 'with link' do
+        within '.answers' do
+          fill_in 'Your answer', with: 'edited answer'
+          click_on 'add link'
+          fill_in 'Name', with: 'Google'
+          fill_in 'Url', with: 'https://google.com'
+          click_on 'Save'
+          expect(page).to have_link 'Google', href: 'https://google.com'
+        end
+      end
     end
   end
 

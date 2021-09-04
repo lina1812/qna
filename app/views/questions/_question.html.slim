@@ -40,6 +40,8 @@ p
     p 
       = f.label :files
       = f.file_field :files, multiple: true
+    .links
+      = link_to_add_association 'add link', f, :links, partial: 'links/link_fields'
       
     = f.submit 'Save'  
   = link_to 'Delete',
