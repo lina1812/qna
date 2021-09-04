@@ -26,6 +26,7 @@ gem 'jbuilder', '~> 2.7'
 # gem 'image_processing', '~> 1.2'
 gem 'aws-sdk-s3', require: false
 gem 'cocoon'
+gem 'validate_url'
 gem 'devise'
 gem 'jquery-rails'
 gem 'slim-rails'
