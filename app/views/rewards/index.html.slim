@@ -1,0 +1,17 @@
+h1= 'My Rewards'
+
+table
+  thead
+    tr
+      th 'Question title'
+      th 'Reward name'
+      th 'Reward image'
+  tbody
+    tr
+      - @rewards.each do |reward|
+        td
+          = reward.question.title
+        td
+          = reward.name
+        td
+          = image_tag(reward.image, size: "160x100")
