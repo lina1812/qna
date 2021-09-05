@@ -54,13 +54,24 @@ feature 'User can edit his question', "
           expect(page).to have_link 'spec_helper.rb'
         end
       end
+      scenario 'with link' do
+        within '.question' do
+          fill_in 'Your question title', with: 'edited title'
+          fill_in 'Your question body', with: 'edited body'
+          click_on 'add link'
+          fill_in 'Name', with: 'Google'
+          fill_in 'Url', with: 'https://google.com'
+          click_on 'Save'
+          expect(page).to have_link 'Google', href: 'https://google.com'
+        end
+      end
     end
-  end
-  scenario "tries to edit other user's question" do
-    sign_in user2
-    visit question_path(question)
-    within '.question' do
-      expect(page).to_not have_link 'Edit'
+    scenario "tries to edit other user's question" do
+      sign_in user2
+      visit question_path(question)
+      within '.question' do
+        expect(page).to_not have_link 'Edit'
+      end
     end
   end
 end

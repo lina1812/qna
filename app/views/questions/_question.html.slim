@@ -11,8 +11,30 @@ p
         = link_to file.filename.to_s, url_for(file)
         - if current_user&.author_of?(@question)
           =link_to 'Delete file', '#', class: 'purge-file-link', data: { file_id: file.id }
+
+.links
+  p Links:
+  ul
+    - @question.links.each do |link|
+      -if link.is_a_gist?
+        - link.raw_gist.split("\n") do |line|
+          p = line
+      -else  
+        li= link_to link.name, link.url
+      - if current_user&.author_of?(@question)
+        =link_to 'Delete link', '#', class: 'delete-link', data: { link_id: link.id }
+ 
+.reward
+  p Reward:
+  ul
+    - if @question.reward
+      = @question.reward.name
+      = image_tag(@question.reward.image, size: "160x100")
+ 
+        
 - if current_user&.author_of?(@question)
   p=link_to 'Edit', '#', class: 'edit-question-link', data: { question_id: @question.id }
+  
   
   .question-errors
     = render 'shared/errors', resource: @question
@@ -26,6 +48,8 @@ p
     p 
       = f.label :files
       = f.file_field :files, multiple: true
+    .links
+      = link_to_add_association 'add link', f, :links, partial: 'links/link_fields'
       
     = f.submit 'Save'  
   = link_to 'Delete',

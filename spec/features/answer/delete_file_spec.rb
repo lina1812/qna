@@ -16,7 +16,7 @@ feature 'User can delete attached files', "
   end
 
   describe 'Authenticated user', js: true do
-    scenario 'delet attached file in his answer' do
+    scenario 'delete attached file in his answer' do
       sign_in user
       visit question_path(question)
       within '.answers' do
