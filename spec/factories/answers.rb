@@ -12,7 +12,7 @@ FactoryBot.define do
         )
       end
     end
-    
+
     trait :with_links do
       after(:build) do |answer|
         create :link, linkable: answer

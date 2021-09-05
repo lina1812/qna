@@ -14,7 +14,7 @@ feature 'User can add links to question', "
     fill_in 'Title', with: 'Test question'
     fill_in 'Body', with: 'text text text'
   end
-  
+
   scenario 'User adds link when asks question' do
     fill_in 'Name', with: 'GitHub'
     fill_in 'Url', with: github_url
@@ -39,7 +39,7 @@ feature 'User can add links to question', "
       expect(page).to have_link 'Google', href: google_url
     end
   end
-  
+
   scenario 'User adds link when asks question wit errors' do
     fill_in 'Name', with: 'GitHub'
     fill_in 'Url', with: ''
@@ -47,6 +47,6 @@ feature 'User can add links to question', "
     click_on 'Ask'
 
     expect(page).to have_content "Links url can't be blank"
-    expect(page).to have_content "Links url is not a valid URL"
+    expect(page).to have_content 'Links url is not a valid URL'
   end
 end

@@ -14,7 +14,7 @@ feature 'User can add links to answer', "
     visit question_path(question)
     fill_in 'answer_body', with: 'My answer'
   end
-  
+
   scenario 'User adds link when give an answer', js: true do
     fill_in 'Name', with: 'GitHub'
     fill_in 'Url', with: github_url
@@ -25,7 +25,7 @@ feature 'User can add links to answer', "
       expect(page).to have_link 'GitHub', href: github_url
     end
   end
-  
+
   scenario 'User adds link when give an answer with errors', js: true do
     fill_in 'Name', with: 'GitHub'
     fill_in 'Url', with: ''
@@ -33,12 +33,10 @@ feature 'User can add links to answer', "
     click_on 'Publish'
 
     expect(page).to have_content "Links url can't be blank"
-    expect(page).to have_content "Links url is not a valid URL"
-   
+    expect(page).to have_content 'Links url is not a valid URL'
   end
 
   scenario 'User adds several links when give an answer', js: true do
-
     click_on 'add link'
     page.all(:fillable_field, 'Name').first.set('GitHub')
     page.all(:fillable_field, 'Url').first.set(github_url)

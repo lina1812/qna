@@ -8,12 +8,12 @@ feature 'User can add links to question', "
   given(:user) { create(:user) }
   given(:user2) { create(:user) }
   given(:question) { create(:question, :with_links, author: user) }
-  
+
   scenario 'Unauthenticated can not edit question' do
     visit question_path(question)
     expect(page).to_not have_link 'Delete link'
   end
-  
+
   describe 'Authenticated user', js: true do
     scenario 'delet link from his question' do
       sign_in user
