@@ -7,6 +7,7 @@ class Question < ApplicationRecord
   has_many :answers, dependent: :destroy
   has_many :other_answers, ->(question) { where.not(id: question.best_answer_id) }, class_name: 'Answer'
   has_many :links, dependent: :destroy, as: :linkable
+  has_many :votes, dependent: :destroy, as: :votable
 
   accepts_nested_attributes_for :links, reject_if: :all_blank
   accepts_nested_attributes_for :reward, reject_if: :all_blank
@@ -14,4 +15,8 @@ class Question < ApplicationRecord
   has_many_attached :files
 
   validates :title, :body, presence: true
+  
+  def score
+    votes.sum(:value)  
+  end
 end

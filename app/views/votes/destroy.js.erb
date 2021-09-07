@@ -1,0 +1,7 @@
+$('.vote-errors-<%= @vote.votable_type.downcase %>-<%= @vote.votable_id %>').html('<%= render 'shared/errors', resource: @vote %>');
+
+<% if !@vote.errors.present? %>
+  $('.vote-<%= @vote.votable_type.downcase %>-<%= @vote.votable_id %>').html('<%= j render 'actions', resource: @vote.votable %>');
+  $('form#vote-for-' + voteId).removeClass('hidden');
+  $('form#vote-against-' + voteId).removeClass('hidden');
+<% end %>

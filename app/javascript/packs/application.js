@@ -15,6 +15,7 @@ import("answers")
 import("question")
 import("file")
 import("link")
+import("vote")
 import * as ActiveStorage from "@rails/activestorage"
 ActiveStorage.start()
 

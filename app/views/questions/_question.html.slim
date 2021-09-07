@@ -31,7 +31,8 @@ p
       = @question.reward.name
       = image_tag(@question.reward.image, size: "160x100")
  
-        
+= render 'votes/actions', resource: @question
+  
 - if current_user&.author_of?(@question)
   p=link_to 'Edit', '#', class: 'edit-question-link', data: { question_id: @question.id }
   
