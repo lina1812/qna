@@ -10,14 +10,7 @@ p
 .links
   p Links:
   ul
-    - @question.best_answer.links.each do |link|
-      -if link.is_a_gist?
-        - link.raw_gist.split("\n") do |line|
-          p = line
-      -else
-        li= link_to link.name, link.url
-      - if current_user&.author_of?(@question.best_answer)
-        =link_to 'Delete link', '#', class: 'delete-link', data: { link_id: link.id }
+    = render @question.best_answer.links
 
 = render 'votes/actions', resource: @question.best_answer
       

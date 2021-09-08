@@ -1,0 +1,5 @@
+$('.link-errors-<%= @link.id %>').html('<%= render 'shared/errors', resource: @link %>');
+
+<% if !@link.errors.present? %>
+  $('.links').html('<%= j render @resource.links %>');
+<% end %>

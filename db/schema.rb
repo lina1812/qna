@@ -88,13 +88,13 @@ ActiveRecord::Schema.define(version: 2021_09_06_192630) do
   end
 
   create_table "votes", force: :cascade do |t|
-    t.bigint "user_id", null: false
+    t.bigint "author_id", null: false
     t.integer "value"
     t.string "votable_type", null: false
     t.bigint "votable_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["user_id"], name: "index_votes_on_user_id"
+    t.index ["author_id"], name: "index_votes_on_author_id"
     t.index ["votable_type", "votable_id"], name: "index_votes_on_votable_type_and_votable_id"
   end
 
@@ -104,5 +104,5 @@ ActiveRecord::Schema.define(version: 2021_09_06_192630) do
   add_foreign_key "questions", "answers", column: "best_answer_id"
   add_foreign_key "questions", "users", column: "author_id"
   add_foreign_key "rewards", "questions"
-  add_foreign_key "votes", "users"
+  add_foreign_key "votes", "users", column: "author_id"
 end

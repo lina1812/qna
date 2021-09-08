@@ -1,21 +1,33 @@
 div class="vote-#{resource.class.name.downcase}-#{resource.id}"
   p
     | Total vote: 
-    = resource.score
+    span class="score"
+      = resource.score
   
   -if current_user && !current_user.author_of?(resource)
     - if current_user.vote_for(resource)
-      =link_to 'Delete your vote', '#', class: 'delete-vote', data: { vote_id: current_user.vote_for(resource).id }
+      = link_to 'Delete your vote',
+      vote_path(current_user.vote_for(resource)),
+      method: :delete,
+      remote: true
+        
     -else
-      = form_with model: [Vote.new], html: { id: "vote-for-#{resource.class.name.downcase}-#{resource.id}" }  do |f|
-    
-        = f.hidden_field :votable_id, value: resource.id
-        = f.hidden_field :votable_type, value: resource.class.name
-        = f.hidden_field :value, value: 1
-        = f.submit 'Vote for'
-    
-      = form_with model: [Vote.new], html: { id: "vote-against-#{resource.class.name.downcase}-#{resource.id}" }do |f|
-        = f.hidden_field :votable_id, value: resource.id
-        = f.hidden_field :votable_type, value: resource.class.name
-        = f.hidden_field :value, value: -1
-        = f.submit 'Vote against'
+      = link_to 'Delete your vote',
+      vote_path(id: 'ID'),
+      method: :delete,
+      class: 'destroy-link',
+      style: 'display: none',
+      remote: true
+      .vote-links
+        .vote-errors
+        = link_to 'Vote for',
+        polymorphic_path([resource, Vote], vote: {value: 1} ),
+        method: :post ,
+        data: { type: :json } ,
+        remote: true
+        br
+        = link_to 'Vote against',
+        polymorphic_path([resource, Vote], vote: {value: -1} ),
+        method: :post ,
+        data: { type: :json } ,
+        remote: true
