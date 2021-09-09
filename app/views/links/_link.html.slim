@@ -1,0 +1,11 @@
+.link
+  -if link.is_a_gist?
+    - link.raw_gist.split("\n") do |line|
+      p = line
+  -else  
+    li= link_to link.name, link.url
+  - if current_user&.author_of?(link.linkable)
+    = link_to 'Delete link',
+    link_path(link),
+    method: :delete,
+    remote: true

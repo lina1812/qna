@@ -25,6 +25,12 @@ FactoryBot.define do
         create :reward, question: question
       end
     end
+    
+    trait :with_vote do
+      after(:build) do |question|
+        create :vote, votable: question
+      end
+    end
 
     trait :invalid do
       title { nil }

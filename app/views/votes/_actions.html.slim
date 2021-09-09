@@ -1,0 +1,33 @@
+div class="vote-#{resource.class.name.downcase}-#{resource.id}"
+  p
+    | Total vote: 
+    span class="score"
+      = resource.score
+  
+  -if current_user && !current_user.author_of?(resource)
+    - if current_user.vote_for(resource)
+      = link_to 'Delete your vote',
+      vote_path(current_user.vote_for(resource)),
+      method: :delete,
+      remote: true
+        
+    -else
+      = link_to 'Delete your vote',
+      vote_path(id: 'ID'),
+      method: :delete,
+      class: 'destroy-link',
+      style: 'display: none',
+      remote: true
+      .vote-links
+        .vote-errors
+        = link_to 'Vote for',
+        polymorphic_path([resource, Vote], vote: {value: 1} ),
+        method: :post ,
+        data: { type: :json } ,
+        remote: true
+        br
+        = link_to 'Vote against',
+        polymorphic_path([resource, Vote], vote: {value: -1} ),
+        method: :post ,
+        data: { type: :json } ,
+        remote: true

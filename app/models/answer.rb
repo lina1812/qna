@@ -1,4 +1,5 @@
 class Answer < ApplicationRecord
+  include Votable
   belongs_to :author, class_name: 'User', inverse_of: :author_answers
   belongs_to :question
 
@@ -9,4 +10,5 @@ class Answer < ApplicationRecord
   has_many_attached :files
 
   validates :body, presence: true
+  
 end

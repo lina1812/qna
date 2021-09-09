@@ -18,6 +18,13 @@ FactoryBot.define do
         create :link, linkable: answer
       end
     end
+    
+    trait :with_vote do
+      after(:build) do |answer|
+        create :vote, votable: answer
+      end
+    end
+    
     trait :invalid do
       body { nil }
     end
