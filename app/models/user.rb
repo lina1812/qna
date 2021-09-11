@@ -2,7 +2,8 @@ class User < ApplicationRecord
   has_many :author_questions, class_name: 'Question', inverse_of: :author, foreign_key: :author_id, dependent: :nullify
   has_many :author_answers, class_name: 'Answer', inverse_of: :author, foreign_key: :author_id, dependent: :nullify
   has_many :author_votes, class_name: 'Vote', inverse_of: :author, foreign_key: :author_id, dependent: :destroy
- 
+  has_many :author_comments, class_name: 'Comment', inverse_of: :author, foreign_key: :author_id, dependent: :destroy
+
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   has_many :best_answers, -> { joins(:question).where('answers.id = questions.best_answer_id') }, class_name: 'Answer', foreign_key: :author_id
@@ -14,9 +15,8 @@ class User < ApplicationRecord
   def author_of?(object)
     id == object.author_id
   end
-  
+
   def vote_for(votable)
     author_votes.where(votable: votable).first
   end
-  
 end

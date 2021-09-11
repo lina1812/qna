@@ -1,0 +1,7 @@
+div class="comments_#{resource.class.name}_#{resource.id}-errors"
+= form_with model: [resource, Comment.new], class: 'new-comment' do |f|
+  p
+    = f.label :body
+    = f.text_area :body
+    
+    =f.submit 'Save comment'

@@ -4,20 +4,19 @@ RSpec.describe VotesController, type: :controller do
   let(:user) { create(:user) }
   let(:user2) { create(:user) }
   let(:question) { create(:question, author: user2) }
- 
-  describe 'POST #create' do
 
+  describe 'POST #create' do
     context 'Unauthenticated can not vote' do
       it 'does not create vote' do
         expect { post :create, params: { vote: attributes_for(:vote), question_id: question.id }, format: :js }.to_not change(Vote, :count)
       end
     end
-    
+
     context 'User vote for not his question' do
       before { login(user) }
       it 'saves a new vote in the database' do
         login(user)
-        expect { post :create, params: { vote: attributes_for(:vote), question_id: question.id  }, format: :js }.to change(Vote, :count).by(1)
+        expect { post :create, params: { vote: attributes_for(:vote), question_id: question.id }, format: :js }.to change(Vote, :count).by(1)
       end
     end
 
@@ -28,8 +27,7 @@ RSpec.describe VotesController, type: :controller do
       end
     end
   end
-  
-  
+
   describe 'DELETE #destroy' do
     let!(:vote) { create(:vote, votable: question, author: user) }
     context 'Unauthenticated can not delete link' do

@@ -4,7 +4,10 @@ class AnswersController < ApplicationController
   before_action :find_question, only: %i[create]
 
   def create
-    @answer = Answer.create(answer_params.merge(question: @question, author: current_user))
+    @answer = Answer.new(answer_params.merge(question: @question, author: current_user))
+    if @answer.save
+      ActionCable.server.broadcast("question_#{@question.id}", { html: render_to_string(partial: 'answers/answer', locals: { answer: @answer }) })
+    end
   end
 
   def update

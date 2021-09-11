@@ -18,7 +18,7 @@ feature 'User can add links to question', "
       expect(page).to have_content 'Total vote: 1'
       expect(page).to_not have_selector(:link_or_button, 'Vote for')
       expect(page).to have_content 'Delete your vote'
-     end 
+    end
   end
 
   scenario 'User try to vote for his question', js: true do
@@ -28,9 +28,9 @@ feature 'User can add links to question', "
       expect(page).to have_content 'Total vote: 0'
       expect(page).to_not have_selector(:link_or_button, 'Vote for')
       expect(page).to_not have_content 'Delete your vote'
-     end 
+    end
   end
-  
+
   scenario 'User delete his vote', js: true do
     sign_in(user)
     visit question_path(question)
@@ -41,7 +41,7 @@ feature 'User can add links to question', "
       expect(page).to have_content 'Total vote: 0'
       expect(page).to have_selector(:link_or_button, 'Vote for')
       expect(page).to_not have_selector(:link_or_button, 'Delete your vote')
-     end 
+    end
   end
 
   scenario 'Unauthenticated can not vote', js: true do
@@ -50,6 +50,6 @@ feature 'User can add links to question', "
       expect(page).to have_content 'Total vote: 0'
       expect(page).to_not have_selector(:link_or_button, 'Vote for')
       expect(page).to_not have_content 'Delete your vote'
-     end
-   end 
+    end
+  end
 end
