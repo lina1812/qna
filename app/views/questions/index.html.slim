@@ -5,13 +5,13 @@ table
     tr
       th 'Question Title'
       th 'Show'
-  tbody
-    tr
+  tbody.question-list
       - @questions.each do |question|
-        td
-          = question.title
-        td
-          = link_to 'Show', question_path(question)
+        tr
+          td
+            = question.title
+          td
+            = link_to 'Show', question_path(question)
 
 
 

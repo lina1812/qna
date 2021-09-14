@@ -1,0 +1,5 @@
+div class="comments comments_#{resource.class.name}_#{resource.id}" data-id="#{resource.class.name}_#{resource.id}"
+  p Comments:
+  = render resource.comments
+br
+= render 'comments/new', resource: resource

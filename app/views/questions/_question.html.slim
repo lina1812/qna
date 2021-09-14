@@ -50,3 +50,6 @@ p
   question_path(@question),
   method: :delete,
   data: { confirm: 'Are you sure?'}
+  
+
+= render 'comments/comments', resource: @question

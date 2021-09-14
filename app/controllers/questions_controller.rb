@@ -21,6 +21,7 @@ class QuestionsController < ApplicationController
     @question = Question.new(question_params)
     @question.author = current_user
     if @question.save
+      ActionCable.server.broadcast('questions', { id: @question.id, title: @question.title })
       redirect_to @question, notice: 'Your question successfully created.'
     else
       render :new

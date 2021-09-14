@@ -32,3 +32,5 @@ p
     = f.submit 'Save'
   
   p=link_to 'Delete Answer', '#', class: 'delete-answer-link', data: { answer_id: @question.best_answer_id }
+
+= render 'comments/comments', resource: @question.best_answer
