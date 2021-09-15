@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  devise_for :users
+  devise_for :users, controllers: { omiauth_callbacks: 'oauth_callbacks' }
   root to: 'questions#index'
 
   resources :files, only: :destroy
