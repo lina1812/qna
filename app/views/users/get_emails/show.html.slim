@@ -1,0 +1,6 @@
+= form_with url: users_get_email_path, local: true do |f|
+  p
+    = f.label :email
+    = f.text_field :email
+
+  = f.submit 'Continue'

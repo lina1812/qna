@@ -12,8 +12,8 @@ class User < ApplicationRecord
   has_many :authorizations, dependent: :destroy
   
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable,
-         :omniauthable, omniauth_providers: [:github]
+         :recoverable, :rememberable, :validatable, :confirmable,
+         :omniauthable, omniauth_providers: [:github, :facebook, :google_oauth2]
 
   def author_of?(object)
     id == object.author_id
@@ -24,7 +24,7 @@ class User < ApplicationRecord
   end
   
   def self.find_for_oauth(auth)
-    Services::FindForOauth.new(auth).call
+    FindForOauth.new(auth).call
   end
 
   def create_authorization(auth)

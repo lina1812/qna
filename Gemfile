@@ -35,6 +35,8 @@ gem 'validate_url'
 gem 'bootsnap', '>= 1.4.2', require: false
 gem 'omniauth'
 gem 'omniauth-github'
+gem 'omniauth-facebook'
+gem 'omniauth-google-oauth2'
 gem 'omniauth-rails_csrf_protection'
 
 group :development, :test do
@@ -51,11 +53,13 @@ group :development do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
+  gem "letter_opener"
 end
 
 group :test do
   # Adds support for Capybara system testing and selenium driver
   gem 'capybara', '>= 2.15'
+  gem 'capybara-email'
   gem 'selenium-webdriver'
   # Easy installation and use of web drivers to run system tests with browsers
   gem 'launchy'
