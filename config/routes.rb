@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
-  devise_for :users
+  devise_for :users, controllers: { omniauth_callbacks: 'oauth_callbacks' }
+  namespace :users do
+    resource :get_email, only: %i[show create]
+  end
   root to: 'questions#index'
 
   resources :files, only: :destroy

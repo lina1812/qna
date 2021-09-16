@@ -17,7 +17,19 @@ feature 'User can sign up', "
     fill_in 'Password confirmation', with: '12345678'
     click_on 'Sign up'
 
-    expect(page).to have_content 'You have signed up successfully.'
+    expect(page).to have_content 'A message with a confirmation link has been sent to your email address.'
+
+    open_email('new_user@example.com')
+    current_email.click_link 'Confirm my account'
+
+    expect(page).to have_content 'Your email address has been successfully confirmed.'
+
+    click_on 'Sign In'
+    fill_in 'Email', with: 'new_user@example.com'
+    fill_in 'Password', with: '12345678'
+    click_on 'Log in'
+
+    expect(page).to have_content 'Signed in successfully.'
     expect(page).to have_content 'Welcome, new_user@example.com'
   end
 
