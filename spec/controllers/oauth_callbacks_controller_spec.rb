@@ -2,11 +2,11 @@ require 'rails_helper'
 
 RSpec.describe OauthCallbacksController, type: :controller do
   before do
-    @request.env["devise.mapping"] = Devise.mappings[:user]
+    @request.env['devise.mapping'] = Devise.mappings[:user]
   end
 
   describe 'Github' do
-    let(:oauth_data) { {'provider' => 'github', 'uid' => 123 } }
+    let(:oauth_data) { { 'provider' => 'github', 'uid' => 123 } }
 
     it 'finds user from oauth data' do
       allow(request.env).to receive(:[]).and_call_original
@@ -27,7 +27,6 @@ RSpec.describe OauthCallbacksController, type: :controller do
         expect(subject.current_user).to eq user
       end
 
-
       it 'redirects to root path' do
         expect(response).to redirect_to root_path
       end
@@ -43,16 +42,14 @@ RSpec.describe OauthCallbacksController, type: :controller do
         expect(response).to redirect_to root_path
       end
 
-
       it 'does not login user' do
         expect(subject.current_user).to_not be
       end
     end
-
   end
-  
+
   describe 'Google' do
-    let(:oauth_data) { {'provider' => 'google_oauth2', 'uid' => 123 } }
+    let(:oauth_data) { { 'provider' => 'google_oauth2', 'uid' => 123 } }
 
     it 'finds user from oauth data' do
       allow(request.env).to receive(:[]).and_call_original
@@ -73,7 +70,6 @@ RSpec.describe OauthCallbacksController, type: :controller do
         expect(subject.current_user).to eq user
       end
 
-
       it 'redirects to root path' do
         expect(response).to redirect_to root_path
       end
@@ -89,15 +85,14 @@ RSpec.describe OauthCallbacksController, type: :controller do
         expect(response).to redirect_to root_path
       end
 
-
       it 'does not login user' do
         expect(subject.current_user).to_not be
       end
     end
   end
-  
+
   describe 'Facebook' do
-    let(:oauth_data) { {'provider' => 'facebook', 'uid' => 123 } }
+    let(:oauth_data) { { 'provider' => 'facebook', 'uid' => 123 } }
 
     it 'finds user from oauth data' do
       allow(request.env).to receive(:[]).and_call_original
@@ -118,7 +113,6 @@ RSpec.describe OauthCallbacksController, type: :controller do
         expect(subject.current_user).to eq user
       end
 
-
       it 'redirects to root path' do
         expect(response).to redirect_to root_path
       end
@@ -133,7 +127,6 @@ RSpec.describe OauthCallbacksController, type: :controller do
       it 'redirects to get_email path' do
         expect(response).to redirect_to users_get_email_path
       end
-
 
       it 'does not login user' do
         expect(subject.current_user).to_not be

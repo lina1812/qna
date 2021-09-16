@@ -23,12 +23,12 @@ feature 'User can sign up', "
     current_email.click_link 'Confirm my account'
 
     expect(page).to have_content 'Your email address has been successfully confirmed.'
-    
+
     click_on 'Sign In'
     fill_in 'Email', with: 'new_user@example.com'
     fill_in 'Password', with: '12345678'
     click_on 'Log in'
-    
+
     expect(page).to have_content 'Signed in successfully.'
     expect(page).to have_content 'Welcome, new_user@example.com'
   end

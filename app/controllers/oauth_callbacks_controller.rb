@@ -10,12 +10,12 @@ class OauthCallbacksController < Devise::OmniauthCallbacksController
   def google_oauth2
     callback(kind: 'Google')
   end
-  
+
   private
-  
+
   def callback(kind)
     user = User.find_for_oauth(request.env['omniauth.auth'])
-    if user&.persisted? && user.confirmed?
+    if user&.persisted? && user&.confirmed?
       sign_in_and_redirect user, event: :authentication
       set_flash_message(:notice, :success, kind: kind) if is_navigational_format?
     elsif user && user.email.blank?

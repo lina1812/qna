@@ -1,13 +1,12 @@
 module Users
   class GetEmailsController < ActionController::Base
-    def show
-    end
-    
+    def show; end
+
     def create
       auth = session[:auth]
       auth['info']['email'] = params[:email]
       user = User.find_for_oauth(OmniAuth::AuthHash.new(auth))
-      
+
       if user&.persisted?
         user.confirmed_at = nil
         user.send_confirmation_instructions
