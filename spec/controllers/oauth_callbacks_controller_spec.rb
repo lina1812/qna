@@ -126,7 +126,7 @@ RSpec.describe OauthCallbacksController, type: :controller do
 
     context 'user does not exist' do
       before do
-        allow(User).to receive(:find_for_oauth)
+        allow(User).to receive(:find_for_oauth).and_return(User.new)
         get :facebook
       end
 
