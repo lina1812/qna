@@ -13,31 +13,6 @@ RSpec.describe User, type: :model do
   let(:vote) { create(:vote, author: user) }
   let(:vote1) { create(:vote) }
 
-  describe '#author_of?' do
-    context 'with valid attributes' do
-      it 'verifies that the current user is the author of the question' do
-        expect(user).to be_author_of(question)
-      end
-      it 'verifies that the current user is the author of the answer' do
-        expect(user).to be_author_of(answer)
-      end
-      it 'verifies that the current user is the author of the vote' do
-        expect(user).to be_author_of(vote)
-      end
-    end
-    context 'with valid attributes' do
-      it 'verifies that the current user is not author of the question' do
-        expect(user).to_not be_author_of(question1)
-      end
-      it 'verifies that the current user is not author of the answer' do
-        expect(user).to_not be_author_of(answer1)
-      end
-      it 'verifies that the current user is not author of the vote' do
-        expect(user).to_not be_author_of(vote1)
-      end
-    end
-  end
-
   describe '.find_for_oauth' do
     let!(:user) { create(:user) }
     let(:auth) { OmniAuth::AuthHash.new(provider: 'facebook', uid: '123456') }
