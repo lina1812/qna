@@ -15,10 +15,6 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable, :confirmable,
          :omniauthable, omniauth_providers: %i[github facebook google_oauth2]
 
-  def author_of?(object)
-    id == object.author_id
-  end
-
   def vote_for(votable)
     author_votes.where(votable: votable).first
   end

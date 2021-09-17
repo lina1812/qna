@@ -4,7 +4,7 @@ div class="vote-#{resource.class.name.downcase}-#{resource.id}"
     span class="score"
       = resource.score
   
-  -if current_user && !current_user.author_of?(resource)
+  - if policy(resource).vote? 
     - if current_user.vote_for(resource)
       = link_to 'Delete your vote',
       vote_path(current_user.vote_for(resource)),

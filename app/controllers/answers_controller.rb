@@ -4,6 +4,7 @@ class AnswersController < ApplicationController
   before_action :find_question, only: %i[create]
 
   def create
+    authorize Answer
     @answer = Answer.new(answer_params.merge(question: @question, author: current_user))
     if @answer.save
       ActionCable.server.broadcast("question_#{@question.id}", { html: render_to_string(partial: 'answers/answer', locals: { answer: @answer }) })
@@ -11,20 +12,19 @@ class AnswersController < ApplicationController
   end
 
   def update
-    if current_user.author_of?(@answer)
-      @answer.update(answer_params)
-      @question = @answer.question
-    end
+    authorize @answer
+    @answer.update(answer_params)
+    @question = @answer.question
   end
 
   def destroy
-    if current_user.author_of?(@answer)
-      @answer.destroy
-      @question = @answer.question
-    end
+    authorize @answer
+    @answer.destroy
+    @question = @answer.question
   end
 
   def mark_as_best
+    authorize @answer
     @question = @answer.question
     @question.update(best_answer_id: @answer.id)
   end

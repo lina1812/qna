@@ -3,21 +3,25 @@ class QuestionsController < ApplicationController
   before_action :load_question, only: %i[show edit update destroy purge_file]
 
   def index
+    authorize Question
     @questions = Question.all
   end
 
   def show
+    authorize @question
     @answer = @question.answers.new
     @answer.links.new
   end
 
   def new
+    authorize Question
     @question = Question.new
     @question.links.new
     @question.build_reward
   end
 
   def create
+    authorize Question
     @question = Question.new(question_params)
     @question.author = current_user
     if @question.save
@@ -29,16 +33,14 @@ class QuestionsController < ApplicationController
   end
 
   def update
-    @question.update(question_params) if current_user.author_of?(@question)
+    authorize @question
+    @question.update(question_params)
   end
 
   def destroy
-    if current_user.author_of?(@question)
-      @question.destroy
-      redirect_to questions_path, notice: 'Your question was successfully deleted.'
-    else
-      redirect_to question_path(@question), notice: 'You can not delete not your question.'
-    end
+    authorize @question
+    @question.destroy
+    redirect_to questions_path, notice: 'Your question was successfully deleted.'
   end
 
   private

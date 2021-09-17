@@ -2,6 +2,7 @@ class CommentsController < ApplicationController
   before_action :authenticate_user!
 
   def create
+    authorize Comment
     @comment = Comment.new(comment_params.merge(author: current_user, commentable: commentable))
     if @comment.save
       ActionCable.server.broadcast("comment_#{@comment.commentable_type}_#{@comment.commentable_id}",

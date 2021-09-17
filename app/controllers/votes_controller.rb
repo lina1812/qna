@@ -2,21 +2,19 @@ class VotesController < ApplicationController
   before_action :authenticate_user!
 
   def create
+    authorize votable, :vote?
     @vote = Vote.new(vote_params.merge(author: current_user, votable: votable))
-    if !current_user.author_of?(@vote.votable)
-      if @vote.save
-        render json: @vote
-      else
-        render json: { errors: @vote.errors.full_messages }, status: :unprocessable_entity
-      end
+    if @vote.save
+      render json: @vote
     else
-      render json: { errors: ['You can not vote for your record'] }, status: :unprocessable_entity
+      render json: { errors: @vote.errors.full_messages }, status: :unprocessable_entity
     end
   end
 
   def destroy
     @vote = Vote.find(params[:id])
-    @vote.destroy if current_user.author_of?(@vote)
+    authorize @vote
+    @vote.destroy
   end
 
   private

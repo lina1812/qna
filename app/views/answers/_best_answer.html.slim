@@ -5,7 +5,7 @@ p
   .files
     - @question.best_answer.files.each do |file|
       p= link_to file.filename.to_s, url_for(file)
-      - if current_user&.author_of?(@question.best_answer)
+      -if policy(@question.best_answer).destroy?
         =link_to 'Delete file', '#', class: 'purge-file-link', data: { file_id: file.id }
 .links
   p Links:
@@ -13,8 +13,7 @@ p
     = render @question.best_answer.links
 
 = render 'votes/actions', resource: @question.best_answer
-      
--if current_user&.author_of?(@question.best_answer)
+-if policy(@question.best_answer).update?      
   p=link_to 'Edit', '#', class: 'edit-answer-link', data: { answer_id: @question.best_answer_id }
   
   div(class= "answer-errors-#{@question.best_answer_id}")

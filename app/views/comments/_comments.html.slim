@@ -2,4 +2,5 @@ div class="comments comments_#{resource.class.name}_#{resource.id}" data-id="#{r
   p Comments:
   = render resource.comments
 br
-= render 'comments/new', resource: resource
+- if policy(Comment).create?
+  = render 'comments/new', resource: resource
