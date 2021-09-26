@@ -7,6 +7,10 @@ RSpec.describe FilePolicy do
   subject { described_class }
 
   permissions :destroy? do
+    it 'grants access if user is admin' do
+      expect(subject).to permit(User.new(admin: true), question.files.first)
+    end
+
     it 'grant access if user is author' do
       expect(subject).to permit(user, question.files.first)
     end

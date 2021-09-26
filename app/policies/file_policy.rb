@@ -6,6 +6,6 @@ class FilePolicy < ApplicationPolicy
   end
 
   def destroy?
-    user&.id == record.record.author_id
+    user&.admin? || user&.id == record.record.author_id
   end
 end

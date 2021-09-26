@@ -6,6 +6,6 @@ class VotePolicy < ApplicationPolicy
   end
 
   def destroy?
-    user&.id == record.author_id
+    user&.admin? || user&.id == record.author_id
   end
 end
