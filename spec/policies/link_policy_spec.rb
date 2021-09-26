@@ -7,6 +7,10 @@ RSpec.describe LinkPolicy do
   subject { described_class }
 
   permissions :destroy? do
+    it 'grants access if user is admin' do
+      expect(subject).to permit(User.new(admin: true), question.links.first)
+    end
+
     it 'grant access if user is author' do
       expect(subject).to permit(user, question.links.first)
     end

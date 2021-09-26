@@ -6,6 +6,6 @@ class LinkPolicy < ApplicationPolicy
   end
 
   def destroy?
-    user&.id == record.linkable.author_id
+    user&.admin? || user&.id == record.linkable.author_id
   end
 end

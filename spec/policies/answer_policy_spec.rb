@@ -16,6 +16,10 @@ RSpec.describe AnswerPolicy do
   end
 
   permissions :update? do
+    it 'grants access if user is admin' do
+      expect(subject).to permit(User.new(admin: true), create(:answer))
+    end
+
     it 'grant access if user is author' do
       expect(subject).to permit(user, create(:answer, author: user))
     end
@@ -26,6 +30,10 @@ RSpec.describe AnswerPolicy do
   end
 
   permissions :destroy? do
+    it 'grants access if user is admin' do
+      expect(subject).to permit(User.new(admin: true), create(:answer))
+    end
+
     it 'grant access if user is author' do
       expect(subject).to permit(user, create(:answer, author: user))
     end
@@ -36,6 +44,10 @@ RSpec.describe AnswerPolicy do
   end
 
   permissions :mark_as_best? do
+    it 'grants access if user is admin' do
+      expect(subject).to permit(User.new(admin: true), create(:answer))
+    end
+
     it 'grant access if user is author of question' do
       expect(subject).to permit(user, create(:answer, question: create(:question, author: user)))
     end
@@ -46,6 +58,10 @@ RSpec.describe AnswerPolicy do
   end
 
   permissions :vote? do
+    it 'grants access if user is admin' do
+      expect(subject).to permit(User.new(admin: true), create(:answer))
+    end
+
     it 'grant access if user is author of question' do
       expect(subject).to permit(user, create(:answer))
     end

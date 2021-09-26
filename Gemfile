@@ -32,7 +32,10 @@ gem 'octokit'
 gem 'slim-rails'
 gem 'validate_url'
 # Reduces boot times through caching; required in config/boot.rb
+gem 'active_model_serializers', '~> 0.10'
 gem 'bootsnap', '>= 1.4.2', require: false
+gem 'doorkeeper'
+gem 'oj'
 gem 'omniauth'
 gem 'omniauth-facebook'
 gem 'omniauth-github'

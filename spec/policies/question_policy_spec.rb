@@ -28,6 +28,10 @@ RSpec.describe QuestionPolicy do
   end
 
   permissions :update? do
+    it 'grants access if user is admin' do
+      expect(subject).to permit(User.new(admin: true), create(:question))
+    end
+
     it 'grant access if user is author' do
       expect(subject).to permit(user, create(:question, author: user))
     end
@@ -38,6 +42,10 @@ RSpec.describe QuestionPolicy do
   end
 
   permissions :destroy? do
+    it 'grants access if user is admin' do
+      expect(subject).to permit(User.new(admin: true), create(:question))
+    end
+
     it 'grant access if user is author' do
       expect(subject).to permit(user, create(:question, author: user))
     end
@@ -48,6 +56,10 @@ RSpec.describe QuestionPolicy do
   end
 
   permissions :vote? do
+    it 'grants access if user is admin' do
+      expect(subject).to permit(User.new(admin: true), create(:question))
+    end
+
     it 'grant access if user is author of question' do
       expect(subject).to permit(user, create(:question))
     end
