@@ -9,7 +9,7 @@ class Question < ApplicationRecord
   has_many :other_answers, ->(question) { where.not(id: question.best_answer_id) }, class_name: 'Answer'
   has_many :links, dependent: :destroy, as: :linkable
   has_many :comments, dependent: :destroy, as: :commentable
-  has_many :user_subscriptions
+  has_many :user_subscriptions, dependent: :destroy
   has_many :subscriptions, source: :user, through: :user_subscriptions
   
   #has_and_belongs_to_many :subscriptions, class_name: 'User'
@@ -29,6 +29,6 @@ class Question < ApplicationRecord
   end
   
   def add_author_to_subscription_question
-    subscriptions << current_user
+    subscriptions << author
   end
 end

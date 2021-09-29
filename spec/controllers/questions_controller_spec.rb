@@ -154,35 +154,4 @@ RSpec.describe QuestionsController, type: :controller do
       end
     end
   end
-  
-  describe 'GET #subscrib' do
-    let!(:question) { create(:question, author: user) }
-    context 'Unauthenticated can not subscrib question' do
-      it 'does not subscrib' do
-        expect{ get :subscribe, params: {id: question.id } }.to_not change(question.subscriptions, :count)
-      end
-    end
-
-    describe 'Authenticated user' do
-      it 'User to subscrib to question' do
-        login(user1)
-        expect{ get :subscribe, params: {id: question.id } }.to change(question.subscriptions, :count).by(1)
-      end
-    end
-  end
-  describe 'GET #unsubscrib' do
-    let!(:question) { create(:question, author: user, subscriptions: [user]) }
-    context 'Unauthenticated can not unsubscrib question' do
-      it 'does not subscrib' do
-        expect{ get :unsubscribe, params: {id: question.id } }.to_not change(question.subscriptions, :count)
-      end
-    end
-
-    describe 'Authenticated user' do
-      it 'User to unsubscrib to question' do
-        login(user)
-        expect{ get :unsubscribe, params: {id: question.id } }.to change(question.subscriptions, :count).by(-1)
-      end
-    end
-  end
 end
