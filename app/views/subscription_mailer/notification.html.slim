@@ -1,0 +1,6 @@
+h1
+ ' New Answer for question
+ = @question.title
+= @answer.body
+br
+=link_to 'For more details follow the link', question_url(@question)

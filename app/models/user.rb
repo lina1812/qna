@@ -10,6 +10,8 @@ class User < ApplicationRecord
   has_many :best_questions, source: :question, through: :best_answers
   has_many :rewards, through: :best_questions
   has_many :authorizations, dependent: :destroy
+  
+  has_and_belongs_to_many :subscription_questions, class_name: 'Question'
 
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable, :confirmable,

@@ -65,6 +65,10 @@ RSpec.describe QuestionsController, type: :controller do
         post :create, params: { question: attributes_for(:question) }
         expect(response).to redirect_to assigns(:question)
       end
+      it 'subscibe author to question' do
+        post :create, params: { question: attributes_for(:question) }
+        expect(Question.first.subscriptions.first).to eq Question.first.author
+      end
     end
 
     context 'with invalid attributes' do
@@ -147,6 +151,37 @@ RSpec.describe QuestionsController, type: :controller do
       it 'redirects to root_path' do
         delete :destroy, params: { id: question1 }
         expect(response).to redirect_to root_path
+      end
+    end
+  end
+  
+  describe 'GET #subscrib' do
+    let!(:question) { create(:question, author: user) }
+    context 'Unauthenticated can not subscrib question' do
+      it 'does not subscrib' do
+        expect{ get :subscribe, params: {id: question.id } }.to_not change(question.subscriptions, :count)
+      end
+    end
+
+    describe 'Authenticated user' do
+      it 'User to subscrib to question' do
+        login(user1)
+        expect{ get :subscribe, params: {id: question.id } }.to change(question.subscriptions, :count).by(1)
+      end
+    end
+  end
+  describe 'GET #unsubscrib' do
+    let!(:question) { create(:question, author: user, subscriptions: [user]) }
+    context 'Unauthenticated can not unsubscrib question' do
+      it 'does not subscrib' do
+        expect{ get :unsubscribe, params: {id: question.id } }.to_not change(question.subscriptions, :count)
+      end
+    end
+
+    describe 'Authenticated user' do
+      it 'User to unsubscrib to question' do
+        login(user)
+        expect{ get :unsubscribe, params: {id: question.id } }.to change(question.subscriptions, :count).by(-1)
       end
     end
   end

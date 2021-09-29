@@ -9,6 +9,8 @@ class Question < ApplicationRecord
   has_many :other_answers, ->(question) { where.not(id: question.best_answer_id) }, class_name: 'Answer'
   has_many :links, dependent: :destroy, as: :linkable
   has_many :comments, dependent: :destroy, as: :commentable
+  
+  has_and_belongs_to_many :subscriptions, class_name: 'User'
 
   accepts_nested_attributes_for :links, reject_if: :all_blank
   accepts_nested_attributes_for :reward, reject_if: :all_blank
@@ -16,4 +18,10 @@ class Question < ApplicationRecord
   has_many_attached :files
 
   validates :title, :body, presence: true
+  
+  private
+
+  def calculate_reputation
+    ReputationJob.perform_later(self)
+  end
 end

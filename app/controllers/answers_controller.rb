@@ -8,6 +8,7 @@ class AnswersController < ApplicationController
     @answer = Answer.new(answer_params.merge(question: @question, author: current_user))
     if @answer.save
       ActionCable.server.broadcast("question_#{@question.id}", { html: render_to_string(partial: 'answers/answer', locals: { answer: @answer }) })
+      SubscriptionJob.perform_now(@answer.id)
     end
   end
 

@@ -1,6 +1,6 @@
 class QuestionsController < ApplicationController
   before_action :authenticate_user!, except: %i[index show]
-  before_action :load_question, only: %i[show edit update destroy purge_file]
+  before_action :load_question, only: %i[show edit update destroy purge_file subscribe unsubscribe]
 
   def index
     authorize Question
@@ -24,6 +24,7 @@ class QuestionsController < ApplicationController
     authorize Question
     @question = Question.new(question_params)
     @question.author = current_user
+    @question.subscriptions << current_user
     if @question.save
       ActionCable.server.broadcast('questions', { id: @question.id, title: @question.title })
       redirect_to @question, notice: 'Your question successfully created.'
@@ -41,6 +42,16 @@ class QuestionsController < ApplicationController
     authorize @question
     @question.destroy
     redirect_to questions_path, notice: 'Your question was successfully deleted.'
+  end
+  
+  def subscribe
+    @question.subscriptions << current_user
+    redirect_to questions_path
+  end
+  
+  def unsubscribe
+    @question.subscriptions.delete(current_user)
+    redirect_to questions_path
   end
 
   private
