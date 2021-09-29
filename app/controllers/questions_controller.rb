@@ -44,16 +44,6 @@ class QuestionsController < ApplicationController
     redirect_to questions_path, notice: 'Your question was successfully deleted.'
   end
   
-  def subscribe
-    @question.subscriptions << current_user
-    redirect_to questions_path
-  end
-  
-  def unsubscribe
-    @question.subscriptions.delete(current_user)
-    redirect_to questions_path
-  end
-
   private
 
   def load_question

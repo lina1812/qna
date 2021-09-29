@@ -25,12 +25,9 @@ Rails.application.routes.draw do
         post :mark_as_best
       end
     end
+    resources :subscriptions, shallow: true, only: %i[create destroy]
     resources :votes, only: %i[create destroy]
     resources :comments, only: :create
-    member do
-      get :subscribe
-      get :unsubscribe
-    end
   end
 
   namespace :api do
