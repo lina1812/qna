@@ -23,6 +23,14 @@ p
     - if @question.reward
       = @question.reward.name
       = image_tag(@question.reward.image, size: "160x100")
+
+.subscribe
+  - if current_user 
+    - if @question.subscriptions.include?(current_user)
+      = link_to 'Unsubscribe', subscription_path(id: @question ), method: :delete ,remote: true
+    - else
+      = link_to 'Subscribe', question_subscriptions_path(question_id: @question), method: :post, remote: true
+    
  
 = render 'votes/actions', resource: @question
   

@@ -65,6 +65,10 @@ RSpec.describe QuestionsController, type: :controller do
         post :create, params: { question: attributes_for(:question) }
         expect(response).to redirect_to assigns(:question)
       end
+      it 'subscibe author to question' do
+        post :create, params: { question: attributes_for(:question) }
+        expect(Question.first.subscriptions.first).to eq Question.first.author
+      end
     end
 
     context 'with invalid attributes' do

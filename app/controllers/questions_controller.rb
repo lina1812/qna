@@ -1,6 +1,6 @@
 class QuestionsController < ApplicationController
   before_action :authenticate_user!, except: %i[index show]
-  before_action :load_question, only: %i[show edit update destroy purge_file]
+  before_action :load_question, only: %i[show edit update destroy purge_file subscribe unsubscribe]
 
   def index
     authorize Question
