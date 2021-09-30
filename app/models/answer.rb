@@ -11,11 +11,11 @@ class Answer < ApplicationRecord
   has_many_attached :files
 
   validates :body, presence: true
-  
+
   after_create :add_user_to_subscription_question
-  
+
   private
-  
+
   def add_user_to_subscription_question
     SubscriptionJob.perform_now(id)
   end

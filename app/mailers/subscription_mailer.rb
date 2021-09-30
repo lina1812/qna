@@ -5,4 +5,3 @@ class SubscriptionMailer < ApplicationMailer
     mail to: user.email
   end
 end
-  

@@ -14,7 +14,7 @@
 # end
 #
 every 5.minutes do
- runner "DailyDigestJob.perform_now"
+  runner 'DailyDigestJob.perform_now'
 end
 
 # Learn more: http://github.com/javan/whenever

@@ -12,7 +12,7 @@ class User < ApplicationRecord
   has_many :authorizations, dependent: :destroy
   has_many :user_subscriptions, dependent: :destroy
   has_many :subscription_questions, source: :question, through: :user_subscriptions
-  #has_and_belongs_to_many :subscription_questions, class_name: 'Question'
+  # has_and_belongs_to_many :subscription_questions, class_name: 'Question'
 
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable, :confirmable,
