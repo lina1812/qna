@@ -1,0 +1,8 @@
+h1 Search#result
+- unless @result.empty?
+  ul
+    - @result.each do |result|
+      = render "#{result.class.to_s.downcase}_search", result: result
+-else
+  p No results
+  

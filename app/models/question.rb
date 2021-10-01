@@ -13,7 +13,6 @@ class Question < ApplicationRecord
   has_many :subscriptions, source: :user, through: :user_subscriptions
 
   ThinkingSphinx::Callbacks.append(self, :behaviours => [:sql])
-  # has_and_belongs_to_many :subscriptions, class_name: 'User'
 
   accepts_nested_attributes_for :links, reject_if: :all_blank
   accepts_nested_attributes_for :reward, reject_if: :all_blank

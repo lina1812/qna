@@ -15,6 +15,8 @@ Rails.application.routes.draw do
   resources :files, only: :destroy
   resources :links, only: :destroy
   resources :rewards, only: :index
+  resources :searches, only: :new 
+  get 'search/result', to: 'searches#result'
 
   resources :questions do
     resources :answers, shallow: true, only: %i[create update destroy] do
