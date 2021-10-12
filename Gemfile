@@ -49,7 +49,7 @@ gem 'mysql2'
 gem 'thinking-sphinx'
 # UI
 gem 'bootstrap'
-gem 'mini-racer'
+gem 'mini_racer'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -62,6 +62,7 @@ group :development, :test do
   gem 'capistrano-rails', require: false
   gem 'capistrano-rvm', require: false
   gem 'capistrano-sidekiq', require: false
+  gem 'capistrano-passenger', require: false
 end
 
 group :development do
