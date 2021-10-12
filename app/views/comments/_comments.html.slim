@@ -1,6 +1,9 @@
 div class="comments comments_#{resource.class.name}_#{resource.id}" data-id="#{resource.class.name}_#{resource.id}"
-  p Comments:
-  = render resource.comments
-br
-- if policy(Comment).create?
-  = render 'comments/new', resource: resource
+  .card.border-primary
+    .card-body
+      strong Comments:
+      ul.list-group
+        = render resource.comments
+      br
+      - if policy(Comment).create?
+        = render 'comments/new', resource: resource

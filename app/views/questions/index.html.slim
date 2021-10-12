@@ -1,18 +1,19 @@
-h1= 'Questions'
-
-table
-  thead
-    tr
-      th 'Question Title'
-      th 'Show'
-  tbody.question-list
-      - @questions.each do |question|
-        tr
-          td
-            = question.title
-          td
-            = link_to 'Show', question_path(question)
-
-
--if policy(Question).create?
-  p= link_to 'Ask question', new_question_path
+.page-header.mt-3
+  h2 Questions
+.container.m-3  
+  table.table
+    thead
+      tr
+        th Question Title
+        th Show
+    tbody.question-list
+        - @questions.each do |question|
+          tr
+            td
+              = question.title
+            td
+              = link_to 'Show', question_path(question), class: 'btn btn-success'
+  
+  
+  -if policy(Question).create?
+    p= link_to 'Ask question', new_question_path, class: 'btn btn-primary'

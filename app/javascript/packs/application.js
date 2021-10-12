@@ -11,10 +11,12 @@ require("channels")
 require("jquery")
 require("@nathanvda/cocoon")
 
+
 import("answers")
 import("question")
 import("file")
 import("vote")
+import("bootstrap")
 import * as ActiveStorage from "@rails/activestorage"
 ActiveStorage.start()
 
