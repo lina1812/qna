@@ -1,8 +1,8 @@
-h1
-  = 'Question Title: '
-  = @question.title
+.page-header.mt-3
+  h2 Question: 
+  h2= @question.title
 p
-  = 'Question Body: ' 
+  strong Question Body: 
   = @question.body
 .files
   - if @question.files.attached?
@@ -13,13 +13,15 @@ p
           =link_to 'Delete file', '#', class: 'purge-file-link', data: { file_id: file.id }
 
 .links
-  p Links:
-  ul
+  p
+  strong Links:
+  ul.list-group
     = render @question.links
  
 .reward
-  p Reward:
-  ul
+  p
+  strong Reward:
+  ul.list-group
     - if @question.reward
       = @question.reward.name
       = image_tag(@question.reward.image, size: "160x100")
@@ -27,15 +29,15 @@ p
 .subscribe
   - if current_user 
     - if @question.subscriptions.include?(current_user)
-      = link_to 'Unsubscribe', subscription_path(id: @question ), method: :delete ,remote: true
+      = link_to 'Unsubscribe', subscription_path(id: @question ), method: :delete ,remote: true, class: 'btn btn-danger'
     - else
-      = link_to 'Subscribe', question_subscriptions_path(question_id: @question), method: :post, remote: true
+      = link_to 'Subscribe', question_subscriptions_path(question_id: @question), method: :post, remote: true, class: 'btn btn-success'
     
  
 = render 'votes/actions', resource: @question
   
 - if policy(@question).update?
-  p=link_to 'Edit', '#', class: 'edit-question-link', data: { question_id: @question.id }
+  p=link_to 'Edit', '#', class: 'edit-question-link btn btn-primary', data: { question_id: @question.id }
   
   
   .question-errors
@@ -53,11 +55,13 @@ p
     .links
       = link_to_add_association 'add link', f, :links, partial: 'links/link_fields'
       
-    = f.submit 'Save'  
+    = f.submit 'Save', class: 'btn btn-success'
+    
   = link_to 'Delete',
   question_path(@question),
   method: :delete,
-  data: { confirm: 'Are you sure?'}
+  data: { confirm: 'Are you sure?'},
+  class: 'btn btn-danger'
   
 
 = render 'comments/comments', resource: @question

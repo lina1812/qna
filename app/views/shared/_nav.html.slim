@@ -1,0 +1,18 @@
+nav.navbar.navbar-light.bg-light
+  .container
+    span.navbar-brand.mb-0.h1
+      = link_to 'QNA', root_path, class: 'navbar-brand'
+      = link_to 'Search', new_search_path, class: 'btn btn-primary '
+      - if user_signed_in?
+        '
+        = link_to 'Reward', rewards_path, class: 'btn btn-primary '
+    span.navbar-text
+      - if user_signed_in?
+        ' Welcome
+        = current_user.email
+        '| 
+        = link_to t('.sign_out'), destroy_user_session_path, method: :delete
+      - else
+        = link_to t('.sign_in') , new_user_session_path
+        '|
+        = link_to t('.signup'), new_user_registration_path
