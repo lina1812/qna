@@ -1,4 +1,4 @@
-class Services::Reputation
+class Reputation
   def self.calculate(_object)
     sleep(3)
   end
