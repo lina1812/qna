@@ -65,11 +65,11 @@ Rails.application.configure do
   config.action_mailer.perform_deliveries = true
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.default_url_options = { host: '3.144.195.187' }
-  config.action_mailer.default_options = { from: 'adm.test.guru@gmail.com' }
+  config.action_mailer.default_options = { from: 'qna.test@yandex.ru' }
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-    address: 'smtp.gmail.com',
-    port: 587,
+    address: 'smtp.yandex.ru',
+    port: 465,
     user_name: ENV['SMTP_USERNAME'],
     password: ENV['SMTP_PASSWORD'],
     authentication: 'plain',
