@@ -6,7 +6,8 @@ require "capistrano/deploy"
 require "capistrano/rvm"
 require "capistrano/bundler"
 require "capistrano/rails"
-require "capistrano/passenger"
+#require "capistrano/passenger"
+require "capistrano3/unicorn"
 require "capistrano/sidekiq"
 require "thinking_sphinx/capistrano"
 require "whenever/capistrano"
@@ -22,6 +23,7 @@ require "whenever/capistrano"
 # or
 require "capistrano/scm/git"
 install_plugin Capistrano::SCM::Git
+install_plugin Capistrano::Sidekiq
 
 # Include tasks from other gems included in your Gemfile
 #
