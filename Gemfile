@@ -42,7 +42,7 @@ gem 'omniauth-github'
 gem 'omniauth-google-oauth2'
 gem 'omniauth-rails_csrf_protection'
 gem 'pundit'
-gem 'sidekiq'
+gem 'sidekiq', '~> 5.0'
 gem 'sinatra', require: false
 gem 'whenever', require: false
 gem 'mysql2'
