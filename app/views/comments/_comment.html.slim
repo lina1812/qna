@@ -1,6 +1,7 @@
-.comment.list-group-item
-  strong Author:
-  = comment.author.email
-  br
-  strong Comment Body:
-  = comment.body
+- cache comment do
+  .comment.list-group-item
+    strong Author:
+    = comment.author.email
+    br
+    strong Comment Body:
+    = comment.body

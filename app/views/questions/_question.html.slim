@@ -1,67 +1,67 @@
-.page-header.mt-3
-  h2 Question: 
-  h2= @question.title
-p
-  strong Question Body: 
-  = @question.body
-.files
-  - if @question.files.attached?
-    - @question.files.each do |file|
-      p
-        = link_to file.filename.to_s, url_for(file)
-        -if policy(@question).destroy?
-          =link_to 'Delete file', '#', class: 'purge-file-link', data: { file_id: file.id }
-
-.links
+-cache @question do
+  .page-header.mt-3
+    h2 Question: 
+    h2= @question.title
   p
-  strong Links:
-  ul.list-group
-    = render @question.links
- 
-.reward
-  p
-  strong Reward:
-  ul.list-group
-    - if @question.reward
-      = @question.reward.name
-      = image_tag(@question.reward.image, size: "160x100")
-
-.subscribe
-  - if current_user 
-    - if @question.subscriptions.include?(current_user)
-      = link_to 'Unsubscribe', subscription_path(id: @question ), method: :delete ,remote: true, class: 'btn btn-danger'
-    - else
-      = link_to 'Subscribe', question_subscriptions_path(question_id: @question), method: :post, remote: true, class: 'btn btn-success'
-    
- 
-= render 'votes/actions', resource: @question
+    strong Question Body: 
+    = @question.body
+  .files
+    - if @question.files.attached?
+      - @question.files.each do |file|
+        p
+          = link_to file.filename.to_s, url_for(file)
+          -if policy(@question).destroy?
+            =link_to 'Delete file', '#', class: 'purge-file-link', data: { file_id: file.id }
   
-- if policy(@question).update?
-  p=link_to 'Edit', '#', class: 'edit-question-link btn btn-primary', data: { question_id: @question.id }
+  .links
+    p
+    strong Links:
+    ul.list-group
+      = render @question.links
+   
+  .reward
+    p
+    strong Reward:
+    ul.list-group
+      - if @question.reward
+        = @question.reward.name
+        = image_tag(@question.reward.image, size: "160x100")
   
-  
-  .question-errors
-    = render 'shared/errors', resource: @question
-  = form_with model: [@question], class: 'hidden', html: { id: "edit-question-#{@question.id}" }  do |f|
-    p  
-      = f.label :title, 'Your question title'
-      = f.text_area :title
-    p  
-      = f.label :body, 'Your question body'
-      = f.text_area :body
-    p 
-      = f.label :files
-      = f.file_field :files, multiple: true
-    .links
-      = link_to_add_association 'add link', f, :links, partial: 'links/link_fields'
+  .subscribe
+    - if current_user 
+      - if @question.subscriptions.include?(current_user)
+        = link_to 'Unsubscribe', subscription_path(id: @question ), method: :delete ,remote: true, class: 'btn btn-danger'
+      - else
+        = link_to 'Subscribe', question_subscriptions_path(question_id: @question), method: :post, remote: true, class: 'btn btn-success'
       
-    = f.submit 'Save', class: 'btn btn-success'
+   
+  = render 'votes/actions', resource: @question
     
-  = link_to 'Delete',
-  question_path(@question),
-  method: :delete,
-  data: { confirm: 'Are you sure?'},
-  class: 'btn btn-danger'
-  
+  - if policy(@question).update?
+    p=link_to 'Edit', '#', class: 'edit-question-link btn btn-primary', data: { question_id: @question.id }
+    
+    
+    .question-errors
+      = render 'shared/errors', resource: @question
+    = form_with model: [@question], class: 'hidden', html: { id: "edit-question-#{@question.id}" }  do |f|
+      p  
+        = f.label :title, 'Your question title'
+        = f.text_area :title
+      p  
+        = f.label :body, 'Your question body'
+        = f.text_area :body
+      p 
+        = f.label :files
+        = f.file_field :files, multiple: true
+      .links
+        = link_to_add_association 'add link', f, :links, partial: 'links/link_fields'
+        
+      = f.submit 'Save', class: 'btn btn-success'
+      
+    = link_to 'Delete',
+    question_path(@question),
+    method: :delete,
+    data: { confirm: 'Are you sure?'},
+    class: 'btn btn-danger'
 
 = render 'comments/comments', resource: @question
